@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkmacosx import Button
+import datetime 
 import re
 
 window=tk.Tk()
@@ -62,8 +63,18 @@ std_id_entry.grid(row=0,column=1)
 date_label=Label(std_registration_frame,text="Date:")
 date_label.grid(row=1,column=0,pady=3)
 
-date_value=Entry(std_registration_frame)
-date_value.grid(row=1,column=1)
+date_value = Entry(std_registration_frame)
+date_value.grid(row=1, column=1)
+
+# Automatically fill current date when the entry box is clicked or tapped
+def fill_current_date(event):
+    current_date = datetime.datetime.now().strftime("%Y/%m/%d")
+    date_value.delete(0, END)
+    date_value.insert(0, current_date)
+
+date_value.bind("<Button-1>", fill_current_date)
+date_value.bind("<ButtonRelease-1>", fill_current_date)
+
 
 # Room Type Frame
 room_frame=LabelFrame(window,text="Room Type")
