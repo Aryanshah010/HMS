@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkmacosx import Button
 import datetime 
+
 import re
 
 window=tk.Tk()
@@ -74,7 +75,6 @@ def fill_current_date(event):
 
 date_value.bind("<Button-1>", fill_current_date)
 date_value.bind("<ButtonRelease-1>", fill_current_date)
-
 
 # Room Type Frame
 room_frame=LabelFrame(window,text="Room Type")
