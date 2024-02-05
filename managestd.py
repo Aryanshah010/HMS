@@ -32,7 +32,7 @@ window.resizable(0,0)
 std_id=Label(window,text="S-ID:")
 std_id.grid(row=0,column=0,sticky="w",padx=10,pady=10)
 
-std_id_entry=Entry(window)
+std_id_entry=Entry(window,width=22)
 std_id_entry.grid(row=0,column=1)
 
 # search Button with icon
@@ -48,43 +48,43 @@ search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 phone_label=Label(window,text="Phone:")
 phone_label.grid(row=1,column=0,sticky="w",padx=10,pady=10)
 
-phone_label_entry=Entry(window)
+phone_label_entry=Entry(window,width=22)
 phone_label_entry.grid(row=1,column=1)
 
 std_first=Label(window,text="First Name:")
 std_first.grid(row=2,column=0,sticky="w",padx=10,pady=10)
 
-std_first_entry=Entry(window)
+std_first_entry=Entry(window,width=22)
 std_first_entry.grid(row=2,column=1)
 
 std_middle=Label(window,text="Middle Name:")
 std_middle.grid(row=3,column=0,sticky="w",padx=10,pady=10)
 
-std_middle_entry=Entry(window)
+std_middle_entry=Entry(window,width=22)
 std_middle_entry.grid(row=3,column=1)
 
 std_last=Label(window,text="Last Name:")
 std_last.grid(row=4,column=0,sticky="w",padx=10,pady=10)
 
-std_last_entry=Entry(window)
+std_last_entry=Entry(window,width=22)
 std_last_entry.grid(row=4,column=1)
 
 building_label=Label(window,text="Building:")
 building_label.grid(row=5,column=0,sticky="w",padx=10,pady=10)
 
-building=ttk.Combobox(window,values=["A","B","C","D","E","F"])
+building=ttk.Combobox(window,width=21,values=["A","B","C","D","E","F"])
 building.grid(row=5,column=1)
 
 room_num=Label(window,text="Room No:")
 room_num.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
-room_num_entry=Entry(window)
+room_num_entry=Entry(window,width=22)
 room_num_entry.grid(row=6,column=1)
 
 room_price=Label(window,text="Total Fees:")
 room_price.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 
-room_price_entry=Entry(window)
+room_price_entry=Entry(window,width=22)
 room_price_entry.grid(row=7,column=1)
 
 update_btn = Button(window, text="Update", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=click)
