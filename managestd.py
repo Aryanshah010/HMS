@@ -6,6 +6,43 @@ from tkmacosx import Button
 from PIL import Image, ImageTk
 import re
 
+
+def validate_entries():
+    # Validate each entry before submitting the form
+    validations = [
+        (std_id_entry.get(), "S-ID", validate_std),
+        (phone_label_entry.get(), "Phone", validate_phone_number),
+        (std_first_entry.get(), "First name", validate_non_empty),
+        (std_last_entry.get(), "Last name", validate_non_empty),
+        (building.get(), "Building", validate_non_empty),
+        (room_num_entry.get(), "Room number", validate_room),
+        (room_price_entry.get(), "Total fees", validate_price),
+        
+    ]
+
+    for value, entry_name, validation_func in validations:
+        if not validation_func(value):
+            messagebox.showerror("Validation Error", f"{entry_name} is not valid or its empty.")
+            return False
+
+    return True
+
+def validate_non_empty(value):
+    return bool(value.strip())
+
+def validate_room(value):
+    return value.isdigit() and int(value)>=0
+
+def validate_std(value):
+    return value.isdigit() and int(value)>=0
+
+def validate_phone_number(value):
+    # Validate phone number to have 10 digits and be a positive number
+    return value.isdigit() and len(value) == 10 and int(value) > 0
+
+def validate_price(value):
+    return value.isdigit() and float(value) >=0
+
 # popup message for delete and update button
 def delete_confirmation():
     result = tk.messagebox.askyesno("Delete Confirmation", "Are you sure you want to delete this student?")
@@ -20,10 +57,10 @@ def confirm_popup():
         tk.messagebox.showinfo("Deletion Canceled", "Student deletion canceled.")
 
 def click():
+    if validate_entries():
+     tk.messagebox.showinfo("Update", "Student info is updated successfully!")
+
     
-    tk.messagebox.showinfo("Update", "Student info is updated successfully!")
-
-
 window=tk.Tk()
 window.title("Update/Delete Student")
 window.geometry("475x420")
@@ -90,7 +127,7 @@ room_price_entry.grid(row=7,column=1)
 update_btn = Button(window, text="Update", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=click)
 update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-delete_btn = Button(window, text="delete", bg="red",font="vardana 15 bold",command=delete_confirmation)
+delete_btn = Button(window, text="Delete", bg="red",font="vardana 15 bold",command=delete_confirmation)
 delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
 close_btn = Button(window, text="Back", bg="pink",fg="black",font="vardana 13 bold",borderless=1)
