@@ -26,7 +26,7 @@ def click():
 
 window=tk.Tk()
 window.title("Update/Delete Student")
-window.geometry("465x420")
+window.geometry("475x420")
 window.resizable(0,0)
 
 std_id=Label(window,text="S-ID:")
