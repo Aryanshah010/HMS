@@ -1,0 +1,123 @@
+from tkinter import*
+import tkinter as tk 
+from tkinter import ttk
+from tkmacosx import Button
+from tkinter import messagebox
+from PIL import Image, ImageTk
+
+win=tk.Tk()
+win.geometry("475x420")
+win.title("UPDATE/DELETE STAFF")
+win.resizable(0,0)
+
+def onclick():
+    if validate_entries():
+        tk.messagebox.showinfo("", "Staff successfully registered!")
+
+def validate_entries():
+    # Validate each entry before submitting the form
+    validations = [
+        (firstname_entry.get(), "firstname", validate_non_empty),
+        (lastname_entry.get(), "lastname", validate_non_empty),
+        (phone_entry.get(), "phone", validate_phone_number),
+        (address_entry.get(), "address", validate_non_empty),
+        (post_entry.get(), "post", validate_non_empty),
+        (salary_entry.get(), "Salary", validate_price),        
+    ]
+    for value, entry_name, validation_func in validations:
+        if not validation_func(value):
+            messagebox.showerror("Validation Error", f"{entry_name} is not valid or its empty.")
+            return False
+    return True
+
+def validate_non_empty(value):
+    return bool(value.strip())
+
+def validate_phone_number(value):
+    # Validate phone number to have 10 digits and be a positive number
+    return value.isdigit() and len(value) == 10 and int(value) > 0
+
+def validate_price(value):
+    return value.isdigit() and float(value) >=0
+
+# popup message for delete and update button
+def delete_confirmation():
+    result = tk.messagebox.askyesno("Delete Confirmation", "Are you sure you want to delete this student?")
+    if result:
+        confirm_popup()
+
+def confirm_popup():
+    confirm_result = tk.messagebox.askyesno("Confirmation", "Do you really want to delete this student?")
+    if confirm_result:
+        tk.messagebox.showinfo("Delete Successful", "Student deleted successfully.")
+    else:
+        tk.messagebox.showinfo("Deletion Canceled", "Student deletion canceled.")
+
+def click():
+    
+    tk.messagebox.showinfo("Update", "Student info is updated successfully!")
+
+
+icon_image = Image.open("searchicon.png")
+icon_image = icon_image.resize((16, 16))  
+search_icon = ImageTk.PhotoImage(icon_image)
+
+
+search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, compound="left")
+search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
+
+
+firstname=Label(win, text="First name:")
+firstname.grid(row=1,column=0,sticky="w",padx=10,pady=10)
+
+firstname_entry=Entry(win,width=22)
+firstname_entry.grid(row=1,column=1)
+
+middlename=Label(win, text="Middle Name:")
+middlename.grid(row=2,column=0,sticky="w",padx=10,pady=10)
+
+middlename_entry= Entry(win,width=22)
+middlename_entry.grid(row=2,column=1)
+
+lastname= Label(win, text="Last Name:")
+lastname.grid(row=3,column=0,sticky="w",padx=10,pady=10)
+
+lastname_entry= Entry(win,width=22)
+lastname_entry.grid(row=3,column=1)
+
+
+phone= Label(win, text="Phone:")
+phone.grid(row=0,column=0,sticky="w",padx=10,pady=10)
+
+phone_entry= Entry(win,width=22)
+phone_entry.grid(row=0,column=1)
+
+address= Label(win, text="Address:")
+address.grid(row=4,column=0,sticky="w",padx=10,pady=10)
+
+address_entry= Entry(win,width=22)
+address_entry.grid(row=4,column=1)
+
+post= Label(win, text="Post:")
+post.grid(row=6,column=0,sticky="w",padx=10,pady=10)
+            
+post_entry=  ttk.Combobox(win,values=["Cleaner","Cook","warden","security guard"] )
+post_entry.grid(row=6,column=1)
+
+salary= Label(win, text="Salary:")
+salary.grid(row=7,column=0,sticky="w",padx=10,pady=10)
+
+salary_entry=Entry(win,width=22)
+salary_entry.grid(row=7,column=1)
+
+update_btn = Button(win, text="Update", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=click)
+update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
+
+delete_btn = Button(win, text="delete", bg="red",font="vardana 15 bold",command=delete_confirmation)
+delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
+
+close_btn = Button(win, text="Back", bg="pink",fg="black",font="vardana 13 bold",borderless=1)
+close_btn.grid(row=8, column=3,  sticky="e",padx=10)
+
+win.mainloop()
+
