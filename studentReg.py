@@ -183,7 +183,7 @@ room_entry.grid(row=1,column=1)
 room_price=Label(room_all,text="Total Fees:")
 room_price.grid(row=2,column=0,sticky="w")
 
-room_price_entry=Entry(room_all)
+room_price_entry=Entry(room_all,width=22)
 room_price_entry.grid(row=2,column=1)
 
 
