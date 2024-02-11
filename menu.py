@@ -17,12 +17,12 @@ def blur_and_resize_image(image_path, blur_radius, size):
 # Create a Tkinter window
 window = tk.Tk()
 window.title("DASHBOARD")
-window.geometry("600x443")
+window.geometry("600x483")
 window.resizable(0,0)
 
 
 # Blur the image and set its size
-background_image = blur_and_resize_image("hostelBuilding.jpg", blur_radius=2,size=(450,443))
+background_image = blur_and_resize_image("hostelBuilding.jpg", blur_radius=2,size=(450,485))
 
 # Convert the image to a Tkinter PhotoImage using ImageTk
 background_photo = ImageTk.PhotoImage(background_image)
@@ -72,7 +72,10 @@ manage_room_btn.grid(row=9,column=0,pady=5)
 room_info_btn=Button(menu_frame,width=150,height=30,text="Room Info",bg="#00B203",font="vardana 13 bold",borderless=1)
 room_info_btn.grid(row=10,column=0,pady=5)
 
+food_menu_btn=Button(menu_frame,width=150,height=30,text="Food Menu",bg="#00B203",font="vardana 13 bold",borderless=1)
+food_menu_btn.grid(row=11,column=0,pady=5)
+
 logout_btn=Button(window,text="Logout",bg="red",font="vardana 13 bold",borderless=1)
-logout_btn.place(x=500,y=407)
+logout_btn.place(x=500,y=453)
 
 window.mainloop()
