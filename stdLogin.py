@@ -52,8 +52,8 @@ lock_icon_label = Label(window, image=lock_icon, border=0)
 lock_icon_label.place(x=320, y=190)
 
 
-default_username_text = "Student ID"
-default_password_text = "Password"
+default_username_text = "Phone Number"
+default_password_text = "Student ID"
 
 # Create Entry widgets
 username_name = Entry(window, width=15, bg="#D9D9D9", fg="black", font=("verdana", 16), insertbackground="black",

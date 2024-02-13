@@ -77,14 +77,11 @@ register_btn.place(x=20,y=425)
 login_btn=Button(window,width=63,text="Login",bg="#D700DA",font=("verdana 12 bold"),borderless=1)
 login_btn.place(x=99,y=425)
 
-for_std_label=Label(window,width=20,bg="#00EA63",fg="black",text="FOR STUDENT",font=("verdana 13 bold"))
-for_std_label.place(x=395,y=390)
-
-create_acc_btn=Button(window,width=110,text="Create Account",bg="#E7E300",font=("verdana 12 bold"),borderless=1)
-create_acc_btn.place(x=397,y=425)
+for_std_label=Label(window,width=15,bg="#00EA63",fg="black",text="FOR STUDENT",font=("verdana 13 bold"))
+for_std_label.place(x=430,y=390)
 
 login_btn=Button(window,width=63,text="Login",bg="#D700DA",font=("verdana 12 bold"),borderless=1)
-login_btn.place(x=520,y=425)
+login_btn.place(x=480,y=425)
 
 
 window.mainloop()
