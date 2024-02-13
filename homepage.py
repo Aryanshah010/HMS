@@ -68,19 +68,19 @@ about_menu.add_command(label="In this app admin stores the record of students,st
 # Bind the menu to the label
 about_label.bind("<Button-1>", lambda event: show_about_menu())
 
-for_admin_label=Label(window,width=15,bg="#00EA63",fg="black",text="FOR ADMIN",font=("verdana 13 bold"))
+for_admin_label=Label(window,width=20,bg="#00EA63",fg="black",text="FOR ADMIN",font=("verdana 13 bold"))
 for_admin_label.place(x=20,y=390)
 
-register_btn=Button(window,width=63,text="Register",bg="#E7E300",font=("verdana 12 bold"),borderless=1)
+register_btn=Button(window,width=75,text="Register",bg="#E7E300",font=("verdana 14 bold"),borderless=1)
 register_btn.place(x=20,y=425)
 
-login_btn=Button(window,width=63,text="Login",bg="#D700DA",font=("verdana 12 bold"),borderless=1)
-login_btn.place(x=99,y=425)
+login_btn=Button(window,width=70,text="Login",bg="#D700DA",font=("verdana 14 bold"),borderless=1)
+login_btn.place(x=135,y=425)
 
-for_std_label=Label(window,width=15,bg="#00EA63",fg="black",text="FOR STUDENT",font=("verdana 13 bold"))
-for_std_label.place(x=430,y=390)
+for_std_label=Label(window,width=12,bg="#00EA63",fg="black",text="FOR STUDENT",font=("verdana 13 bold"))
+for_std_label.place(x=455,y=390)
 
-login_btn=Button(window,width=63,text="Login",bg="#D700DA",font=("verdana 12 bold"),borderless=1)
+login_btn=Button(window,width=70,text="Login",bg="#F3A200",font=("verdana 14 bold"),borderless=1)
 login_btn.place(x=480,y=425)
 
 

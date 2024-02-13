@@ -103,10 +103,10 @@ salary.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 salary_entry=Entry(win,width=22)
 salary_entry.grid(row=7,column=1)
 
-save_btn = Button(win, text="Save", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=onclick)
+save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 15 bold",borderless=1,command=onclick)
 save_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-back_btn = Button(win, text="back", bg="red",borderless=1,font="vardana 15 bold")
+back_btn = Button(win, text="back", bg="red",borderless=1,font="verdana 15 bold")
 back_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
 

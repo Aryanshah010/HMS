@@ -15,7 +15,7 @@ def onclick():
     tk.messagebox.showinfo("","Student fees saved!")
 
 win=tk.Tk()
-win.geometry("480x400")
+win.geometry("540x400")
 win.resizable(0,0)
 win.title("STUDENT FEE")
 
@@ -75,10 +75,10 @@ search_icon = ImageTk.PhotoImage(icon_image)
 search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, borderless=1,compound="left")
 search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
-save_btn = Button(win, text="Save", bg="#FF7F24",font="vardana 14 bold",borderless=1,command=onclick)
-save_btn.place(x=25,y=350)
+save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick)
+save_btn.place(x=20,y=350)
 
-back_btn=Button(win,text="Back",bg="#DA00D6",font="vardana 14 bold",borderless=1)
+back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 14 bold",borderless=1)
 back_btn.place(x=143,y=350)
 
 win.mainloop()

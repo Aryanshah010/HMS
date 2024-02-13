@@ -61,7 +61,7 @@ icon_image = icon_image.resize((16, 16))
 search_icon = ImageTk.PhotoImage(icon_image)
 
 
-search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, compound="left")
+search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, compound="left")
 search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
 
@@ -108,13 +108,13 @@ salary.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 salary_entry=Entry(win,width=22)
 salary_entry.grid(row=7,column=1)
 
-update_btn = Button(win, text="Update", bg="#FF7F24",font="vardana 14 bold",borderless=1,command=onclick)
+update_btn = Button(win, text="Update", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick)
 update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-delete_btn = Button(win, text="Delete", bg="red",font="vardana 14 bold",borderless=1,command=delete_confirmation)
+delete_btn = Button(win, text="Delete", bg="red",font="verdana 14 bold",borderless=1,command=delete_confirmation)
 delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
-close_btn = Button(win, text="Back", bg="pink",fg="black",font="vardana 13 bold",borderless=1)
+close_btn = Button(win, text="Back", bg="pink",fg="black",font="verdana 13 bold",borderless=1)
 close_btn.grid(row=8, column=3,  sticky="e",padx=10)
 
 win.mainloop()

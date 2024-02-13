@@ -9,7 +9,7 @@ import re
 
 window=tk.Tk()
 window.title("STUDENT REGISTRATION")
-window.geometry("450x685")
+window.geometry("450x680")
 window.resizable(0,0)
 
 def onclick():
@@ -186,10 +186,10 @@ room_price.grid(row=2,column=0,sticky="w")
 room_price_entry=Entry(room_all,width=22)
 room_price_entry.grid(row=2,column=1)
 
-create_btn = Button(window, text="Create", bg="#00FFFF",font=("vardana 15 bold"),borderless=1,command=onclick)
+create_btn = Button(window, text="Create", bg="#00FFFF",font=("verdana 15 bold"),borderless=1,command=onclick)
 create_btn.place(x=16,y=640)
 
-close_btn = Button(window, text="Back", bg="#FF7F24",font=("vardana 15 bold"),borderless=1)
+close_btn = Button(window, text="Back", bg="#FF7F24",font=("verdana 15 bold"),borderless=1)
 close_btn.place(x=150,y=640)
 
 

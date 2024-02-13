@@ -64,7 +64,7 @@ for (text, value) in values.items():
 	Radiobutton(room_type, text = text, variable = v, 
 		value = value).grid(sticky="w") 
 
-create_btn = Button(new_room_frame, text="Create", bg="#00FFFF",font="vardana 13 bold",borderless=1,command=onclick)
+create_btn = Button(new_room_frame, text="Create", bg="#00FFFF",font="verdana 13 bold",borderless=1,command=onclick)
 create_btn.grid(row=5, column=0, sticky="w",padx=10,pady=10)
 
 Update_delete_frame=LabelFrame(window,text="Update/Delete Room")
@@ -88,14 +88,14 @@ for (text,value) in values.items():
 	Radiobutton(room_status,text=text,variable=val,value=value).grid(sticky="w")
 	
 
-update_btn = Button(Update_delete_frame, text="Update", bg="#FF7F24",font="vardana 13 bold",borderless=1,command=onclicked)
+update_btn = Button(Update_delete_frame, text="Update", bg="#FF7F24",font="verdana 13 bold",borderless=1,command=onclicked)
 update_btn.grid(row=2, column=0,  sticky="w",padx=10,pady=10)
 
-delete_btn = Button(Update_delete_frame, text="Delete", bg="red",font="vardana 13 bold",borderless=1,command=delete_confirmation)
+delete_btn = Button(Update_delete_frame, text="Delete", bg="red",font="verdana 13 bold",borderless=1,command=delete_confirmation)
 delete_btn.grid(row=2, column=1, sticky="w",padx=10,pady=10)
 
 
-back_btn=Button(window,text="Back",bg="#DA00D6",font="vardana 15 bold")
+back_btn=Button(window,text="Back",bg="#DA00D6",font="verdana 15 bold")
 back_btn.place(x=10,y=565)
 
 window.mainloop()

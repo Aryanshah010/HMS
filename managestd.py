@@ -63,7 +63,7 @@ def click():
     
 window=tk.Tk()
 window.title("Update/Delete Student")
-window.geometry("475x405")
+window.geometry("480x405")
 window.resizable(0,0)
 
 std_id=Label(window,text="S-ID:")
@@ -78,7 +78,7 @@ icon_image = Image.open("searchicon.png")
 icon_image = icon_image.resize((16, 16))  
 search_icon = ImageTk.PhotoImage(icon_image)
 
-search_button = Button(window, text="Search", bg="#00C8D8",fg="white",image=search_icon, borderless=1, compound="left")
+search_button = Button(window, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1, compound="left")
 search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
 
@@ -124,13 +124,13 @@ room_price.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 room_price_entry=Entry(window,width=22)
 room_price_entry.grid(row=7,column=1)
 
-update_btn = Button(window, text="Update", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=click)
+update_btn = Button(window, text="Update", bg="#FF7F24",font="verdana 15 bold",borderless=1,command=click)
 update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-delete_btn = Button(window, text="Delete", bg="red",font="vardana 15 bold",borderless=1,command=delete_confirmation)
+delete_btn = Button(window, text="Delete", bg="red",font="verdana 15 bold",borderless=1,command=delete_confirmation)
 delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
-close_btn = Button(window, text="Back", bg="pink",fg="black",borderless=1,font="vardana 13 bold")
+close_btn = Button(window, text="Back", bg="pink",fg="black",borderless=1,font="verdana 13 bold")
 close_btn.grid(row=8, column=3,  sticky="e",padx=10)
 
 window.mainloop()
