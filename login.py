@@ -51,7 +51,6 @@ user_icon_label.place(x=320, y=120)
 lock_icon_label = Label(window, image=lock_icon, border=0)
 lock_icon_label.place(x=320, y=190)
 
-
 default_username_text = "Username"
 default_password_text = "Password"
 
@@ -71,8 +70,7 @@ password_name.bind("<FocusIn>", lambda event: on_entry_click(event, password_nam
 password_name.bind("<FocusOut>", lambda event: on_focus_out(event, password_name, default_password_text))
 password_name.place(x=360, y=190)
 
-sign_btn = Button(window, text="Sign In", width=100, height=30, bg="#00C412", fg="black", font=('verdana', 15),
-                borderless=1,command=validate_sigin)  
+sign_btn = Button(window, text="Sign In", width=100, height=30, bg="#00C412", fg="black", font=('verdana', 15),borderless=1,command=validate_sigin)  
 sign_btn.place(x=395,y=275)
 
 window.mainloop()

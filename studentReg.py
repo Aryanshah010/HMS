@@ -52,7 +52,7 @@ def validate_price(value):
     return value.isdigit() and float(value) >=0
 
 # Registration Frame
-std_registration_frame=LabelFrame(window,text="Registration ID")
+std_registration_frame=LabelFrame(window,text="REGISTRATION ID")
 std_registration_frame.grid(row=0,column=0,padx=10,pady=10,sticky='w')
 
 std_id=Label(std_registration_frame,text="S-ID:")
@@ -164,7 +164,7 @@ guardian_address_entry.grid(row=4,column=1)
 
 # Room allocation
 
-room_all=LabelFrame(window,text="Room Allocation")
+room_all=LabelFrame(window,text="ROOM ALLOCATION")
 room_all.grid(row=3,column=0,sticky="w",padx=10,pady=10)
 
 building_label=Label(room_all,text="Building:")
@@ -186,19 +186,11 @@ room_price.grid(row=2,column=0,sticky="w")
 room_price_entry=Entry(room_all,width=22)
 room_price_entry.grid(row=2,column=1)
 
+create_btn = Button(window, text="Create", bg="#00FFFF",font=("vardana 15 bold"),borderless=1,command=onclick)
+create_btn.place(x=16,y=640)
 
-
-# Buttons
-
-button_frame=Frame(window)
-button_frame.grid(row=4,column=0,sticky="w",padx=10,pady=10)
-
-
-create_btn = Button(button_frame, text="Create", bg="#00FFFF",font="vardana 15 bold",command=onclick)
-create_btn.grid(row=0, column=0, sticky="w")
-
-close_btn = Button(button_frame, text="Back", bg="#FF7F24",font="vardana 15 bold",borderless=1)
-close_btn.grid(row=0, column=1,  sticky="w")
+close_btn = Button(window, text="Back", bg="#FF7F24",font=("vardana 15 bold"),borderless=1)
+close_btn.place(x=150,y=640)
 
 
 window.mainloop() 

@@ -95,7 +95,7 @@ delete_btn = Button(Update_delete_frame, text="Delete", bg="red",font="vardana 1
 delete_btn.grid(row=2, column=1, sticky="w",padx=10,pady=10)
 
 
-back_btn=Button(window,text="Back",bg="#DA00D6",font="vardana 15 bold",borderless=1)
+back_btn=Button(window,text="Back",bg="#DA00D6",font="vardana 15 bold")
 back_btn.place(x=10,y=565)
 
 window.mainloop()

@@ -18,12 +18,12 @@ def onclick():
 def validate_entries():
     # Validate each entry before submitting the form
     validations = [
-        (firstname_entry.get(), "firstname", validate_non_empty),
-        (lastname_entry.get(), "lastname", validate_non_empty),
-        (phone_entry.get(), "phone", validate_phone_number),
-        (address_entry.get(), "address", validate_non_empty),
+        (firstname_entry.get(), "First name", validate_non_empty),
+        (lastname_entry.get(), "Last name", validate_non_empty),
+        (phone_entry.get(), "Phone", validate_phone_number),
+        (address_entry.get(), "Address", validate_non_empty),
         (doj_entry.get(), "Date of join", validate_non_empty),
-        (post_entry.get(), "post", validate_non_empty),
+        (post_entry.get(), "Post", validate_non_empty),
         (salary_entry.get(), "Salary", validate_price),
         
     ]
@@ -106,7 +106,7 @@ salary_entry.grid(row=7,column=1)
 save_btn = Button(win, text="Save", bg="#FF7F24",font="vardana 15 bold",borderless=1,command=onclick)
 save_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-back_btn = Button(win, text="back", bg="red",font="vardana 15 bold")
+back_btn = Button(win, text="back", bg="red",borderless=1,font="vardana 15 bold")
 back_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
 

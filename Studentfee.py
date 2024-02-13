@@ -3,6 +3,12 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL  import Image , ImageTk
 from tkmacosx import Button
+import datetime
+
+def fill_current_date(event):
+    current_date = datetime.datetime.now().strftime("%Y/%m/%d")
+    Monthentry.delete(0, END)
+    Monthentry.insert(0, current_date)
 
 
 def onclick():
@@ -52,19 +58,21 @@ Month.grid(row=5,column=0 ,sticky="w",padx=10,pady=10)
 Monthentry =Entry(win)
 Monthentry.grid(row=5,column=1,padx=10,pady=10)
 
+Monthentry.bind("<Button-1>", fill_current_date)
+Monthentry.bind("<ButtonRelease-1>", fill_current_date)
 
-AmountPaid =Label(win,text="Amount:")
+
+AmountPaid =Label(win,text="Amount Paid:")
 AmountPaid.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
 AmountPaidentry =Entry(win)
 AmountPaidentry.grid(row=6,column=1,padx=10,pady=10)
 
-
 icon_image = Image.open("searchicon.png")
 icon_image = icon_image.resize((16, 16))  
 search_icon = ImageTk.PhotoImage(icon_image)
 
-search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, compound="left")
+search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, borderless=1,compound="left")
 search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
 save_btn = Button(win, text="Save", bg="#FF7F24",font="vardana 14 bold",borderless=1,command=onclick)

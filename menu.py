@@ -3,8 +3,6 @@ from tkinter import ttk
 from PIL import Image, ImageFilter, ImageTk
 from tkmacosx import Button
 
-
-
 # Function to blur the image and resize it
 def blur_and_resize_image(image_path, blur_radius, size):
     image = Image.open(image_path)
