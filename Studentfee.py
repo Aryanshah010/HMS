@@ -52,7 +52,7 @@ Roomnumber.grid(row=4,column=0 ,sticky="w",padx=10,pady=10)
 Roomnumberentry =Entry(win)
 Roomnumberentry.grid(row=4,column=1,padx=10,pady=10)
 
-Month =Label(win,text="Date of payment:")
+Month =Label(win,text="Date of payment received:")
 Month.grid(row=5,column=0 ,sticky="w",padx=10,pady=10)
 
 Monthentry =Entry(win)
@@ -62,7 +62,7 @@ Monthentry.bind("<Button-1>", fill_current_date)
 Monthentry.bind("<ButtonRelease-1>", fill_current_date)
 
 
-AmountPaid =Label(win,text="Amount Paid:")
+AmountPaid =Label(win,text="FEE Received:")
 AmountPaid.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
 AmountPaidentry =Entry(win)
