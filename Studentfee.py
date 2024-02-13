@@ -1,0 +1,76 @@
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
+from PIL  import Image , ImageTk
+from tkmacosx import Button
+
+
+def onclick():
+    tk.messagebox.showinfo("","Student fees saved!")
+
+win=tk.Tk()
+win.geometry("480x400")
+win.resizable(0,0)
+win.title("STUDENT FEE")
+
+S_Id =Label(win,text="S-ID :")
+S_Id.grid(row=0,column=0,sticky="w",padx=10,pady=10)
+
+S_Id_entry=Entry(win)
+S_Id_entry.grid(row=0,column=1,padx=10,pady=10)
+
+
+Firstname =Label(win,text ="First Name :")
+Firstname.grid(row=1,column=0,sticky="w",padx=10,pady=10)
+
+Firstnameentry=Entry(win)
+Firstnameentry.grid(row=1,column=1,padx=10,pady=10)
+
+Middlename =Label(win,text="Middle Name :")
+Middlename.grid(row= 2,column=0 ,sticky="w",padx=10,pady=10)
+   
+Middlenameentry=Entry(win)
+Middlenameentry.grid(row=2,column=1,padx=10,pady=10)
+
+Lastname =Label(win,text="Last Name :")
+Lastname.grid(row=3,column=0,sticky="w",padx=10,pady=10)
+
+
+Lastnameentry = Entry(win)
+Lastnameentry.grid(row=3 ,column=1,padx=10,pady=10)
+
+Roomnumber = Label(win,text="Room Number :")
+Roomnumber.grid(row=4,column=0 ,sticky="w",padx=10,pady=10)
+
+
+Roomnumberentry =Entry(win)
+Roomnumberentry.grid(row=4,column=1,padx=10,pady=10)
+
+Month =Label(win,text="Date of payment:")
+Month.grid(row=5,column=0 ,sticky="w",padx=10,pady=10)
+
+Monthentry =Entry(win)
+Monthentry.grid(row=5,column=1,padx=10,pady=10)
+
+
+AmountPaid =Label(win,text="Amount:")
+AmountPaid.grid(row=6,column=0,sticky="w",padx=10,pady=10)
+
+AmountPaidentry =Entry(win)
+AmountPaidentry.grid(row=6,column=1,padx=10,pady=10)
+
+
+icon_image = Image.open("searchicon.png")
+icon_image = icon_image.resize((16, 16))  
+search_icon = ImageTk.PhotoImage(icon_image)
+
+search_button = Button(win, text="Search", bg="#00C8D8",fg="white",image=search_icon, compound="left")
+search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
+
+save_btn = Button(win, text="Save", bg="#FF7F24",font="vardana 14 bold",borderless=1,command=onclick)
+save_btn.place(x=25,y=350)
+
+back_btn=Button(win,text="Back",bg="#DA00D6",font="vardana 14 bold",borderless=1)
+back_btn.place(x=143,y=350)
+
+win.mainloop()
