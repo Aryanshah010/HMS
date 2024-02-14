@@ -4,135 +4,142 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkmacosx import Button
 from PIL import Image, ImageTk
+import menu
 
+def manage_stdpg():
 
+    def menupg():
+        window.destroy()
+        menu.dashboard()
 
-def validate_entries():
-    # Validate each entry before submitting the form
-    validations = [
-        (std_id_entry.get(), "S-ID", validate_std),
-        (phone_label_entry.get(), "Phone", validate_phone_number),
-        (std_first_entry.get(), "First name", validate_non_empty),
-        (std_last_entry.get(), "Last name", validate_non_empty),
-        (building.get(), "Building", validate_non_empty),
-        (room_num_entry.get(), "Room number", validate_room),
-        (room_price_entry.get(), "Total fees", validate_price),
+    def validate_entries():
+        # Validate each entry before submitting the form
+        validations = [
+            (std_id_entry.get(), "S-ID", validate_std),
+            (phone_label_entry.get(), "Phone", validate_phone_number),
+            (std_first_entry.get(), "First name", validate_non_empty),
+            (std_last_entry.get(), "Last name", validate_non_empty),
+            (building.get(), "Building", validate_non_empty),
+            (room_num_entry.get(), "Room number", validate_room),
+            (room_price_entry.get(), "Total fees", validate_price),
+            
+        ]
+
+        for value, entry_name, validation_func in validations:
+            if not validation_func(value):
+                messagebox.showerror("Validation Error", f"{entry_name} is not valid or its empty.")
+                return False
+
+        return True
+
+    def validate_non_empty(value):
+        return bool(value.strip())
+
+    def validate_room(value):
+        return value.isdigit() and int(value)>=0
+
+    def validate_std(value):
+        return value.isdigit() and int(value)>=0
+
+    def validate_phone_number(value):
+        # Validate phone number to have 10 digits and be a positive number
+        return value.isdigit() and len(value) == 10 and int(value) > 0
+
+    def validate_price(value):
+        return value.isdigit() and float(value) >=0
+
+    # popup message for delete and update button
+    def delete_confirmation():
+        result = tk.messagebox.askyesno("Delete Confirmation", "Are you sure you want to delete this student?")
+        if result:
+            confirm_popup()
+
+    def confirm_popup():
+        confirm_result = tk.messagebox.askyesno("Confirmation", "Do you really want to delete this student?")
+        if confirm_result:
+            tk.messagebox.showinfo("Delete Successful", "Student deleted successfully.")
+        else:
+            tk.messagebox.showinfo("Deletion Canceled", "Student deletion canceled.")
+
+    def click():
+        if validate_entries():
+          tk.messagebox.showinfo("Update", "Student info is updated successfully!")
+
         
-    ]
+    window=tk.Tk()
+    window.title("Update/Delete Student")
+    window.geometry("480x405")
+    window.resizable(0,0)
 
-    for value, entry_name, validation_func in validations:
-        if not validation_func(value):
-            messagebox.showerror("Validation Error", f"{entry_name} is not valid or its empty.")
-            return False
+    std_id=Label(window,text="S-ID:")
+    std_id.grid(row=0,column=0,sticky="w",padx=10,pady=10)
 
-    return True
+    std_id_entry=Entry(window,width=22)
+    std_id_entry.grid(row=0,column=1)
 
-def validate_non_empty(value):
-    return bool(value.strip())
+    # search Button with icon
 
-def validate_room(value):
-    return value.isdigit() and int(value)>=0
+    icon_image = Image.open("searchicon.png")
+    icon_image = icon_image.resize((16, 16))  
+    search_icon = ImageTk.PhotoImage(icon_image)
 
-def validate_std(value):
-    return value.isdigit() and int(value)>=0
-
-def validate_phone_number(value):
-    # Validate phone number to have 10 digits and be a positive number
-    return value.isdigit() and len(value) == 10 and int(value) > 0
-
-def validate_price(value):
-    return value.isdigit() and float(value) >=0
-
-# popup message for delete and update button
-def delete_confirmation():
-    result = tk.messagebox.askyesno("Delete Confirmation", "Are you sure you want to delete this student?")
-    if result:
-        confirm_popup()
-
-def confirm_popup():
-    confirm_result = tk.messagebox.askyesno("Confirmation", "Do you really want to delete this student?")
-    if confirm_result:
-        tk.messagebox.showinfo("Delete Successful", "Student deleted successfully.")
-    else:
-        tk.messagebox.showinfo("Deletion Canceled", "Student deletion canceled.")
-
-def click():
-    if validate_entries():
-     tk.messagebox.showinfo("Update", "Student info is updated successfully!")
-
-    
-window=tk.Tk()
-window.title("Update/Delete Student")
-window.geometry("480x405")
-window.resizable(0,0)
-
-std_id=Label(window,text="S-ID:")
-std_id.grid(row=0,column=0,sticky="w",padx=10,pady=10)
-
-std_id_entry=Entry(window,width=22)
-std_id_entry.grid(row=0,column=1)
-
-# search Button with icon
-
-icon_image = Image.open("searchicon.png")
-icon_image = icon_image.resize((16, 16))  
-search_icon = ImageTk.PhotoImage(icon_image)
-
-search_button = Button(window, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1, compound="left")
-search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
+    search_button = Button(window, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1, compound="left")
+    search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
 
-phone_label=Label(window,text="Phone:")
-phone_label.grid(row=1,column=0,sticky="w",padx=10,pady=10)
+    phone_label=Label(window,text="Phone:")
+    phone_label.grid(row=1,column=0,sticky="w",padx=10,pady=10)
 
-phone_label_entry=Entry(window,width=22)
-phone_label_entry.grid(row=1,column=1)
+    phone_label_entry=Entry(window,width=22)
+    phone_label_entry.grid(row=1,column=1)
 
-std_first=Label(window,text="First Name:")
-std_first.grid(row=2,column=0,sticky="w",padx=10,pady=10)
+    std_first=Label(window,text="First Name:")
+    std_first.grid(row=2,column=0,sticky="w",padx=10,pady=10)
 
-std_first_entry=Entry(window,width=22)
-std_first_entry.grid(row=2,column=1)
+    std_first_entry=Entry(window,width=22)
+    std_first_entry.grid(row=2,column=1)
 
-std_middle=Label(window,text="Middle Name:")
-std_middle.grid(row=3,column=0,sticky="w",padx=10,pady=10)
+    std_middle=Label(window,text="Middle Name:")
+    std_middle.grid(row=3,column=0,sticky="w",padx=10,pady=10)
 
-std_middle_entry=Entry(window,width=22)
-std_middle_entry.grid(row=3,column=1)
+    std_middle_entry=Entry(window,width=22)
+    std_middle_entry.grid(row=3,column=1)
 
-std_last=Label(window,text="Last Name:")
-std_last.grid(row=4,column=0,sticky="w",padx=10,pady=10)
+    std_last=Label(window,text="Last Name:")
+    std_last.grid(row=4,column=0,sticky="w",padx=10,pady=10)
 
-std_last_entry=Entry(window,width=22)
-std_last_entry.grid(row=4,column=1)
+    std_last_entry=Entry(window,width=22)
+    std_last_entry.grid(row=4,column=1)
 
-building_label=Label(window,text="Building:")
-building_label.grid(row=5,column=0,sticky="w",padx=10,pady=10)
+    building_label=Label(window,text="Building:")
+    building_label.grid(row=5,column=0,sticky="w",padx=10,pady=10)
 
-building=ttk.Combobox(window,width=21,values=["A","B","C","D","E","F"])
-building.grid(row=5,column=1)
+    building=ttk.Combobox(window,width=21,values=["A","B","C","D","E","F"])
+    building.grid(row=5,column=1)
 
-room_num=Label(window,text="Room No:")
-room_num.grid(row=6,column=0,sticky="w",padx=10,pady=10)
+    room_num=Label(window,text="Room No:")
+    room_num.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
-room_num_entry=Entry(window,width=22)
-room_num_entry.grid(row=6,column=1)
+    room_num_entry=Entry(window,width=22)
+    room_num_entry.grid(row=6,column=1)
 
-room_price=Label(window,text="Total Fees:")
-room_price.grid(row=7,column=0,sticky="w",padx=10,pady=10)
+    room_price=Label(window,text="Total Fees:")
+    room_price.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 
-room_price_entry=Entry(window,width=22)
-room_price_entry.grid(row=7,column=1)
+    room_price_entry=Entry(window,width=22)
+    room_price_entry.grid(row=7,column=1)
 
-update_btn = Button(window, text="Update", bg="#FF7F24",font="verdana 15 bold",borderless=1,command=click)
-update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
+    update_btn = Button(window, text="Update", bg="#FF7F24",font="verdana 15 bold",borderless=1,command=click)
+    update_btn.grid(row=8, column=0,  sticky="w",padx=10,pady=10)
 
-delete_btn = Button(window, text="Delete", bg="red",font="verdana 15 bold",borderless=1,command=delete_confirmation)
-delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
+    delete_btn = Button(window, text="Delete", bg="red",font="verdana 15 bold",borderless=1,command=delete_confirmation)
+    delete_btn.grid(row=8, column=1, sticky="w",padx=10,pady=10)
 
-close_btn = Button(window, text="Back", bg="pink",fg="black",borderless=1,font="verdana 13 bold")
-close_btn.grid(row=8, column=3,  sticky="e",padx=10)
+    close_btn = Button(window, text="Back", bg="pink",fg="black",borderless=1,font="verdana 13 bold",command=menupg)
+    close_btn.grid(row=8, column=3,  sticky="e",padx=10)
 
-window.mainloop()
+    window.mainloop()
 
 
+if  __name__ == "__main__":
+    manage_stdpg()

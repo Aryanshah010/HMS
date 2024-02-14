@@ -3,30 +3,21 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from tkmacosx import Button
 from tkinter import messagebox
-import menu
 import homepage
 
-def loginpg():
-
+def new_acc():
+    
     def home():
         window.destroy()
         homepage.main()
 
-
     def validate_sigin():
         username = username_name.get()
         password = password_name.get()
-        if username == default_username_text or password == default_password_text:
-            messagebox.showerror("Error", "Please fill in both username and password.")
-        else:
-            open_dashboard()
-
-    def open_dashboard():
-        # Close the login window
-        window.destroy()
-
-        # Call the main function of the dashboard_page module
-        menu.main()
+        confirm=comform_password.get()
+        if username == default_username_text or password == default_password_text or confirm ==default_comform_text:
+            messagebox.showerror("Error", "Please fill all the Entries.")
+    
 
     def on_entry_click(event, entry_widget, default_text):
         if entry_widget.get() == default_text:
@@ -43,6 +34,7 @@ def loginpg():
     window.geometry("600x430")
     window.resizable(0, 0)
     window.configure(bg="purple")
+    
     # Load the images
     # User logo
     user_icon = Image.open("user_logo.png")
@@ -68,8 +60,9 @@ def loginpg():
     lock_icon_label = Label(window, image=lock_icon, border=0)
     lock_icon_label.place(x=320, y=190)
 
-    default_username_text = "Username"
-    default_password_text = "Password"
+    default_username_text = "Create Username"
+    default_password_text = "Create Password"
+    default_comform_text="Confirm Password"
 
     # Create Entry widgets
     username_name = Entry(window, width=15, bg="#D9D9D9", fg="black", font=("verdana", 16), insertbackground="black",
@@ -87,13 +80,21 @@ def loginpg():
     password_name.bind("<FocusOut>", lambda event: on_focus_out(event, password_name, default_password_text))
     password_name.place(x=360, y=190)
 
-    sign_btn = Button(window, text="Sign In", width=90, height=30, bg="#00C412", fg="black", font=("verdana 15"),borderless=1,command=validate_sigin)  
-    sign_btn.place(x=320,y=275)
+    comform_password=Entry(window, width=15, bg="#D9D9D9", fg="black", font=("verdana", 16), insertbackground="black",
+                        insertwidth=2)
+    comform_password.insert(0,default_comform_text)
+    comform_password.bind("<FocusIn>", lambda event: on_entry_click(event, comform_password, default_comform_text))
+    comform_password.bind("<FocusOut>", lambda event: on_focus_out(event, comform_password, default_comform_text))
+    comform_password.place(x=360, y=250)
 
-    back_btn = Button(window, text="Back", width=90, height=30, bg="#F33400", fg="black", font=("verdana 15"),borderless=1,command=home)
-    back_btn.place(x=450,y=275)
+    create_btn = Button(window, text="Create", width=100, height=30, bg="#00C412", fg="black", font=("verdana 15"),borderless=1,command=validate_sigin)  
+    create_btn.place(x=325,y=330)
+
+    back_btn = Button(window, text="Back", width=100, height=30, bg="#F33400", fg="black", font=("verdana 15"),borderless=1,command=home)  
+    back_btn.place(x=440,y=330)
 
     window.mainloop()
 
+
 if  __name__ == "__main__":
-    loginpg()
+    new_acc()
