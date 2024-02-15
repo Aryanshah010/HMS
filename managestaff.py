@@ -13,9 +13,23 @@ def manage_staffpg():
         menu.dashboard()
 
     win=tk.Tk()
-    win.geometry("475x370")
     win.title("UPDATE/DELETE STAFF")
     win.resizable(0,0)
+
+    window_width = 475
+    window_height = 370
+
+    # get the screen dimension
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+
+    # find the center point
+    center_x = int(screen_width/2 - window_width / 2)
+    center_y = int(screen_height/2 - window_height / 2)
+
+    # set the position of the window to the center of the screen
+    win.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
 
     def onclick():
         if validate_entries():

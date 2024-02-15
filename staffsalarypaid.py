@@ -22,9 +22,23 @@ def salarypg():
         tk.messagebox.showinfo("","Staff salary payment is saved!")
 
     win=tk.Tk()
-    win.geometry("480x400")
     win.resizable(0,0)
-    win.title("STUDENT FEE")
+    win.title("STAFF FEE")
+
+    window_width = 480
+    window_height = 400
+
+    # get the screen dimension
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+
+    # find the center point
+    center_x = int(screen_width/2 - window_width / 2)
+    center_y = int(screen_height/2 - window_height / 2)
+
+    # set the position of the window to the center of the screen
+    win.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
 
     phone =Label(win,text="Phone Number:")
     phone.grid(row=0,column=0,sticky="w",padx=10,pady=10)

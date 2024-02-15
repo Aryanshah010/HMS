@@ -69,12 +69,26 @@ def dashboard():
     # Create a Tkinter window
     window = tk.Tk()
     window.title("MENU")
-    window.geometry("800x590")
+    # window.geometry("800x590")
     window.resizable(0,0)
+    window_width = 800
+    window_height = 590
+
+    # get the screen dimension
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    # find the center point
+    center_x = int(screen_width/2 - window_width / 2)
+    center_y = int(screen_height/2 - window_height / 2)
+
+    # set the position of the window to the center of the screen
+    window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
 
 
     # Blur the image and set its size
-    background_image = blur_and_resize_image("hostelBuilding.jpg", blur_radius=3,size=(650,590))
+    background_image = blur_and_resize_image("hostelBuilding.jpg", blur_radius=3,size=(650,595))
 
     # Convert the image to a Tkinter PhotoImage using ImageTk
     background_photo = ImageTk.PhotoImage(background_image)

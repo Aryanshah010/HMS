@@ -30,9 +30,23 @@ def std_loginpg():
 
     window = tk.Tk()
     window.title("STUDENT LOGIN")
-    window.geometry("600x430")
     window.resizable(0, 0)
     window.configure(bg="purple")
+
+    window_width = 600
+    window_height = 430
+
+    # get the screen dimension
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    # find the center point
+    center_x = int(screen_width/2 - window_width / 2)
+    center_y = int(screen_height/2 - window_height / 2)
+
+    # set the position of the window to the center of the screen
+    window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
     # Load the images
     # User logo
     user_icon = Image.open("user_logo.png")

@@ -14,8 +14,22 @@ def std_regpg():
 
     window=tk.Tk()
     window.title("STUDENT REGISTRATION")
-    window.geometry("450x680")
     window.resizable(0,0)
+
+    window_width = 450
+    window_height = 680
+
+    # get the screen dimension
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    # find the center point
+    center_x = int(screen_width/2 - window_width / 2)
+    center_y = int(screen_height/2 - window_height / 2)
+
+    # set the position of the window to the center of the screen
+    window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
 
     def onclick():
         if validate_entries():
