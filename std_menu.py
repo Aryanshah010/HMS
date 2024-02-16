@@ -3,12 +3,17 @@ from tkinter import ttk
 from PIL import Image, ImageFilter, ImageTk
 from tkmacosx import Button
 import homepage
+import check_fee
 
 def std_menupg(): 
 
     def homepg():
         window.destroy()
         homepage.main()
+
+    def ck_fee():
+        window.destroy()
+        check_fee.fees()
 
     window = tk.Tk()
     window.title("MENU")
@@ -53,7 +58,7 @@ def std_menupg():
     menu_label=tk.Label(menu_frame,text="DASHBOARD",fg="#D76500",bg="#00D4FF",font="verdana 20 bold underline")
     menu_label.grid(row=0,column=0,sticky="w",padx=14,pady=5)
 
-    fees_btn=Button(menu_frame,width=200,height=70,text="Check Fees",bg="#00B203",font="verdana 15 bold",borderless=1)
+    fees_btn=Button(menu_frame,width=200,height=70,text="Check Fees",bg="#00B203",font="verdana 15 bold",borderless=1,command=ck_fee)
     fees_btn.grid(row=1,column=0,pady=10)
 
     std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1)
