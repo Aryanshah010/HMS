@@ -9,11 +9,6 @@ import menu
 
 def salarypg():
 
-    # def make_data():
-    #     # Insert some sample data into the Treeview
-    #     for i in range(1, 1000):
-    #         date_amt_box.insert("", "end", values=("2024-02-" + str(i), str(i * 100)))
-
     def on_scroll(*args):
         date_amt_box.yview(*args)
     
@@ -29,7 +24,12 @@ def salarypg():
 
 
     def onclick():
-        tk.messagebox.showinfo("","Staff salary payment is saved!")
+        save=tk.messagebox.askyesno("","DO YOU WANT TO SAVE THE PAYMENT?")
+        if save:
+            tk.messagebox.showinfo("","Staff salary saved successfully!")
+        else:
+            tk.messagebox.showinfo("","Salary paid canceled!")
+
 
     win=tk.Tk()
     win.resizable(0,0)
@@ -110,9 +110,6 @@ def salarypg():
 
     back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 14 bold",borderless=1,command=menupg)
     back_btn.place(x=143,y=350)
-
-    style = ttk.Style()
-    style.theme_use("clam")
 
 
    # salary paid record

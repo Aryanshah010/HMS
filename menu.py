@@ -10,6 +10,7 @@ import manageRoom
 import managestaff
 import managestd
 import homepage
+import stdinfo
 
 def dashboard():
     # Function of redirect to specific pages when buttons are clicked
@@ -26,7 +27,8 @@ def dashboard():
         Studentfee.feespg()
 
     def std_info():
-        pass
+        window.destroy()
+        stdinfo.stdinfopg()
 
     def reg_staff():
         window.destroy()
