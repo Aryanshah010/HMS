@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 from PIL  import Image , ImageTk
 from tkmacosx import Button
@@ -7,6 +8,9 @@ import datetime
 import menu
 
 def feespg():
+
+    def on_scroll(*args):
+        date_amt_box.yview(*args)
 
     def menupg():
         win.destroy()
@@ -19,14 +23,19 @@ def feespg():
 
 
     def onclick():
-        tk.messagebox.showinfo("","Student fees saved!")
+        save=tk.messagebox.askyesno("","DO YOU WANT TO SAVE FEE OF THIS STUDENT!")
+        if save:
+            tk.messagebox.showinfo("","Student FEE saved successfully!")
+        else:
+            tk.messagebox.showinfo("","FEE Cancled!")
+            
 
     win=tk.Tk()
     win.resizable(0,0)
     win.title("STUDENT FEE")
 
-    window_width = 540
-    window_height = 400
+    window_width = 535
+    window_height = 630
 
     # get the screen dimension
     screen_width = win.winfo_screenwidth()
@@ -101,6 +110,30 @@ def feespg():
 
     back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 14 bold",borderless=1,command=menupg)
     back_btn.place(x=143,y=350)
+    
+    # salary paid record
+    date_amt_box = ttk.Treeview(win)
+    # defining columns
+    date_amt_box['columns'] = ("Date", "Amount")
+    date_amt_box.column("#0", width=0, stretch=NO)  # Set width to 0 and stretch to NO
+    date_amt_box.column("Date", anchor=CENTER, width=200, minwidth=200)
+    date_amt_box.column("Amount", anchor=CENTER, width=200, minwidth=200)
+    
+    date_amt_box.heading("#0", text="", anchor=CENTER)
+    date_amt_box.heading("Date", text="Date", anchor=CENTER)
+    date_amt_box.heading("Amount", text="Amount", anchor=CENTER)
+    
+    # Place the salary paid record at the bottom
+    date_amt_box.grid(row=7, column=0, columnspan=4, pady=60, sticky="nsew")
+    
+    # make_data()  # Insert sample data
+
+    # Add a vertical scrollbar
+    scrollbar = ttk.Scrollbar(win, orient=VERTICAL, command=on_scroll)
+    scrollbar.grid(row=7,column=3,sticky="nse",pady=85,padx=0,rowspan=100)
+    # Link the scrollbar to the Treeview widget
+    date_amt_box.configure(yscrollcommand=scrollbar.set)
+  
 
     win.mainloop()
 
