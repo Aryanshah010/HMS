@@ -4,6 +4,7 @@ from PIL import Image, ImageFilter, ImageTk
 from tkmacosx import Button
 import homepage
 import check_fee
+import myinfo
 
 def std_menupg(): 
 
@@ -14,6 +15,10 @@ def std_menupg():
     def ck_fee():
         window.destroy()
         check_fee.fees()
+
+    def infopg():
+        window.destroy()
+        myinfo.myinfopg()
 
     window = tk.Tk()
     window.title("MENU")
@@ -61,7 +66,7 @@ def std_menupg():
     fees_btn=Button(menu_frame,width=200,height=70,text="Check Fees",bg="#00B203",font="verdana 15 bold",borderless=1,command=ck_fee)
     fees_btn.grid(row=1,column=0,pady=10)
 
-    std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1)
+    std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1,command=infopg)
     std_info_btn.grid(row=2,column=0,pady=10)
 
     std_info_btn=Button(menu_frame,width=200,height=70,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1)
