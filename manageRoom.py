@@ -33,7 +33,7 @@ def manage_roompg():
     window.title("Manage Room")
     window.resizable(0,0)
     window_width = 400
-    window_height = 600
+    window_height = 650
 
     # get the screen dimension
     screen_width = window.winfo_screenwidth()
@@ -99,10 +99,11 @@ def manage_roompg():
     room_status=LabelFrame(Update_delete_frame,text="Room Status")
     room_status.grid(row=1,column=0,sticky="w",padx=10,pady=10)
 
-    val=StringVar(room_status,"0")
+    val=StringVar(room_status,"2")
 
     values={"Booked":"1",
-            "Unbooked":"2"}
+            "Unbooked":"2",
+            "Semi-Booked":"3"}
 
     for (text,value) in values.items():
         Radiobutton(room_status,text=text,variable=val,value=value).grid(sticky="w")
@@ -116,7 +117,7 @@ def manage_roompg():
 
 
     back_btn=Button(window,text="Back",bg="#DA00D6",font="verdana 15 bold",command=menupg)
-    back_btn.place(x=10,y=565)
+    back_btn.place(x=10,y=600)
 
     window.mainloop()
 

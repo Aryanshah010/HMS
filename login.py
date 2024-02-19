@@ -14,17 +14,14 @@ def loginpg():
         window.destroy()
         homepage.main()
 
-
     def validate_sigin():
-        
+
         username = username_name.get()
         password = password_name.get()
 
-        if username==default_username_text or password==default_password_text:
-            messagebox.showerror("","Please fill both entries!")
-        
+        if username == default_username_text or password == default_password_text:
+            messagebox.showerror("", "Please fill both entries!")
         else:
-        
             conn = sqlite3.connect('hostel.db')
             cursor = conn.cursor()
             
@@ -40,23 +37,14 @@ def loginpg():
                 if user:
                     window.destroy()
                     menu.dashboard()
-
                 else:
+                    
                     messagebox.showerror("Error", "Invalid username or password")
             else:
-                # If the adminLogin table doesn't exist, show a message asking to create an account first
-                ok=messagebox.showwarning("Warning", "No user accounts found. Please create an account first.")
-                if ok:
-                    home()
+                messagebox.showwarning("Warning", "No user accounts found. Please create an account first.")
 
             conn.close()
-    
 
-
-    def open_dashboard():
-        
-        window.destroy()
-        menu.dashboard()
 
     def on_entry_click(event, entry_widget, default_text):
         if entry_widget.get() == default_text:
@@ -67,6 +55,8 @@ def loginpg():
         if not entry_widget.get():
             entry_widget.insert(0, default_text)
             entry_widget.config(fg="black")
+
+    
 
     window = tk.Tk()
     window.title("LOGIN")

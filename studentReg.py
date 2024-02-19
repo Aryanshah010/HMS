@@ -56,6 +56,9 @@ def std_regpg():
                 conn = sqlite3.connect('hostel.db')
                 cursor = conn.cursor()
 
+                Room_type=v.get()
+
+
                 # Create Students table if it doesn't exist
                 cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
                                     std_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,6 +70,7 @@ def std_regpg():
                                     Address TEXT,
                                     Building TEXT,
                                     Room_No INTEGER,
+                                    Room_type TEXT,
                                     Total_Fees REAL,
                                     Guardian_First_Name TEXT,
                                     Guardian_Middle_Name TEXT,
@@ -94,12 +98,12 @@ def std_regpg():
 
                 # Insert values into the Students table
                 cursor.execute('''INSERT INTO Students (Date_of_Admission, First_Name, Middle_Name, Last_Name, 
-                                                        Phone_Number, Address, Building, Room_No, Total_Fees, 
+                                                        Phone_Number, Address, Building, Room_No,Room_type, Total_Fees, 
                                                         Guardian_First_Name, Guardian_Middle_Name, Guardian_Last_Name, 
                                                         Guardian_Phone_Number, Guardian_Address) 
-                                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)''',
                             ( date, first_name, middle_name, last_name, phone_number, address,
-                                building_val, room_no, total_fees, guardian_first_name, guardian_middle_name,
+                                building_val, room_no,Room_type, total_fees, guardian_first_name, guardian_middle_name,
                                 guardian_last_name, guardian_phone_number, guardian_address))
                 
                 conn.commit()
@@ -145,7 +149,7 @@ def std_regpg():
         return value.isdigit() and len(value) == 10 and int(value) > 0
 
     def validate_price(value):
-        return value.isdigit() and float(value) >=0
+        return value.isdigit() and int(value) >=0
 
     # Registration Frame
     std_registration_frame=LabelFrame(window,text="REGISTRATION ID")

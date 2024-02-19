@@ -3,7 +3,7 @@ from tkinter import ttk
 import tkinter as tk
 from tkmacosx import Button
 import menu
-
+import sqlite3
 
 def staffinfo():
 
@@ -72,6 +72,18 @@ def staffinfo():
 
     back_btn=Button(window,text="Back",width=130,bg="#DA00D6",font="verdana 14 bold",command=dashpg)
     back_btn.place(x=790,y=235)
+
+    try:
+        conn = sqlite3.connect('hostel.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Staff")
+        rows = cursor.fetchall()
+        for row in rows:
+            std_info.insert('', 'end', values=row)
+        conn.close()
+    except Exception as e:
+        tk.messagebox.showerror("Error", str(e))
+
    
     window.mainloop()
 

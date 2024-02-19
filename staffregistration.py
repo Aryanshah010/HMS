@@ -5,9 +5,10 @@ from tkmacosx import Button
 from tkinter import messagebox
 import datetime
 import menu
+import sqlite3
 
 def reg_staffpg():
-
+   
     def menupg():
         win.destroy()
         menu.dashboard()
@@ -33,7 +34,55 @@ def reg_staffpg():
 
     def onclick():
         if validate_entries():
-            tk.messagebox.showinfo("", "Staff successfully registered!")
+            try:
+                conn=sqlite3.connect("hostel.db")
+                c=conn.cursor()
+
+                c.execute('''CREATE TABLE IF NOT EXISTS Staff(
+                          
+                          First_Name TEXT,
+                          Middle_Name TEXT,
+                          Last_Name TEXT,
+                          Phone_Number INTEGER PRIMARY KEY,
+                          Address TEXT,
+                          Date_of_join TEXT,
+                          Post TEXT,
+                          Salary INTEGER
+
+                    )''')
+                
+                phone_number = phone_entry.get()
+                c.execute("SELECT * FROM Staff WHERE Phone_Number = ?", (phone_number,))
+                existing_staff = c.fetchone()
+                if existing_staff:
+                    messagebox.showerror("Error", "Staff with this phone number already exists.")
+                    return
+                
+                First_Name=firstname_entry.get().capitalize()
+                Middle_Name=middlename_entry.get().capitalize()
+                Last_Name=lastname_entry.get().capitalize()
+                Phone_Num=phone_entry.get()
+                Address=address_entry.get().capitalize()
+                Date_of_join=doj_entry.get()
+                Post=post_entry.get().capitalize()
+                Salary=int(salary_entry.get())
+
+
+                c.execute('''INSERT INTO Staff( First_Name,Middle_Name,Last_Name,Phone_Number,Address,Date_of_join,
+                          Post,Salary)
+
+                          VALUES( ?, ?, ?, ?, ?, ?, ?,?)''',
+                          (First_Name,Middle_Name,Last_Name,Phone_Num,Address,Date_of_join,Post,Salary))
+                              
+                conn.commit()
+                conn.close()
+                
+                result=messagebox.showinfo("","Staff successfully registered!")
+                if result:
+                    menupg()
+
+            except Exception as e:
+                tk.messagebox.showerror("Error", str(e))
 
     def validate_entries():
         # Validate each entry before submitting the form
@@ -63,7 +112,7 @@ def reg_staffpg():
         return value.isdigit() and len(value) == 10 and int(value) > 0
 
     def validate_price(value):
-        return value.isdigit() and float(value) >=0
+        return value.isdigit() and int(value) >=0
 
     def fill_current_date(event):
         current_date = datetime.datetime.now().strftime("%Y/%m/%d")
@@ -135,3 +184,18 @@ def reg_staffpg():
 
 if  __name__ == "__main__":
     reg_staffpg()
+                          
+                          
+                          
+                          
+                        
+                          
+                          
+                          
+
+            
+
+        
+
+
+

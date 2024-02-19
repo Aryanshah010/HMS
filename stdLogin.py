@@ -4,18 +4,41 @@ from PIL import Image, ImageTk
 from tkmacosx import Button
 from tkinter import messagebox
 import homepage
+import std_menu
+import sqlite3
 
 def std_loginpg():
+
+   
     def home():
         window.destroy()
         homepage.main()
 
+    def validate_signin():
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
 
-    def validate_sigin():
-        username = username_name.get()
-        password = password_name.get()
-        if username == default_username_text or password == default_password_text:
-            messagebox.showerror("Error", "Please fill in both username and password.")
+            # Retrieve student ID and phone number from the entry widgets
+            phone_number = username_name.get()
+            std_id = password_name.get()
+
+            # Query the Students table for the provided credentials
+            cursor.execute("SELECT * FROM Students WHERE Phone_Number=? AND std_id=?", (phone_number, std_id))
+            student_data = cursor.fetchone()
+
+            conn.close()
+
+            # If a record is found, login successful
+            if student_data:
+                window.destroy()
+                std_menu.std_menupg()
+            else:
+                messagebox.showerror("Login Error", "Invalid phone number or student ID.")
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
     
 
     def on_entry_click(event, entry_widget, default_text):
@@ -93,7 +116,7 @@ def std_loginpg():
     password_name.place(x=360, y=190)
 
     sign_btn = Button(window, text="Sign In", width=100, height=30, bg="#00C412", fg="black", font=('verdana', 15),
-                    borderless=1,command=validate_sigin)  
+                    borderless=1,command=validate_signin)  
     sign_btn.place(x=320,y=275)
 
     back_btn = Button(window, text="Back", width=100, height=30, bg="#F33400", fg="black", font=("verdana 15"),borderless=1,command=home)
