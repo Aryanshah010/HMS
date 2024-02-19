@@ -50,7 +50,7 @@ def stdinfopg():
     hor_scroll_bar.config(command=std_info.xview)
 
     # defining columns
-    std_info["columns"]=("S-ID","Date of Admission","First Name","Middle Name","Last Name","Ph No","Std Address","Building","Room No","Room Status","G First Name","G Middle Name","G Last Name","G Ph No","G Address")
+    std_info["columns"]=("S-ID","Date of Admission","First Name","Middle Name","Last Name","Ph No","Std Address","Building","Room No","Room Status","Total Fees","G First Name","G Middle Name","G Last Name","G Ph No","G Address")
 
     std_info.column("#0",width=0,minwidth=0)
     std_info.column("S-ID",anchor="w",width=50,minwidth=80)
@@ -63,6 +63,7 @@ def stdinfopg():
     std_info.column("Building",anchor="w",width=60,minwidth=65)
     std_info.column("Room No",anchor="w",width=60,minwidth=65)
     std_info.column("Room Status",anchor="w",width=75,minwidth=75)
+    std_info.column("Total Fees",anchor="w",width=75,minwidth=75)
     std_info.column("G First Name",anchor="w",width=120,minwidth=120)
     std_info.column("G Middle Name",anchor="w",width=120,minwidth=120)
     std_info.column("G Last Name",anchor="w",width=120,minwidth=120)
@@ -80,6 +81,7 @@ def stdinfopg():
     std_info.heading("Building",text="Building",anchor="w")
     std_info.heading("Room No",text="Room No",anchor="w")
     std_info.heading("Room Status",text="Room Status",anchor="w")
+    std_info.heading("Total Fees",text="Total Fees",anchor="w")
     std_info.heading("G First Name",text="G First Name",anchor="w")
     std_info.heading("G Middle Name",text="G Middle Name",anchor="w")
     std_info.heading("G Last Name",text="G Last Name",anchor="w")

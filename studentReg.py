@@ -5,8 +5,25 @@ from tkinter import messagebox
 from tkmacosx import Button
 import datetime 
 import menu
+import sqlite3
 
 def std_regpg():
+
+    def fetch_max_std_id():
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT MAX(std_id) FROM Students")
+            max_id = cursor.fetchone()[0]
+            conn.close()
+            return max_id if max_id else 0
+        except Exception as e:
+            tk.messagebox.showerror("Error", str(e))
+            return 0
+
+    # Fetch the maximum std_id and increment it by 1
+    default_std_id = fetch_max_std_id() + 1
+
 
     def menupg():
         window.destroy()
@@ -32,8 +49,68 @@ def std_regpg():
 
 
     def onclick():
+        
         if validate_entries():
-            tk.messagebox.showinfo("", "Student successfully registered!")
+            try:
+          
+                conn = sqlite3.connect('hostel.db')
+                cursor = conn.cursor()
+
+                # Create Students table if it doesn't exist
+                cursor.execute('''CREATE TABLE IF NOT EXISTS Students (
+                                    std_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    Date_of_Admission TEXT,
+                                    First_Name TEXT,
+                                    Middle_Name TEXT,
+                                    Last_Name TEXT,
+                                    Phone_Number TEXT,
+                                    Address TEXT,
+                                    Building TEXT,
+                                    Room_No INTEGER,
+                                    Total_Fees REAL,
+                                    Guardian_First_Name TEXT,
+                                    Guardian_Middle_Name TEXT,
+                                    Guardian_Last_Name TEXT,
+                                    Guardian_Phone_Number TEXT,
+                                    Guardian_Address TEXT
+                                )''')
+
+                # Extract values from Tkinter widgets
+                
+                date = date_value.get()
+                first_name = std_first_entry.get().capitalize()
+                middle_name = std_middle_entry.get().capitalize()
+                last_name = std_last_entry.get().capitalize()
+                phone_number = std_phone_entry.get()
+                address = std_address_entry.get().capitalize()
+                building_val = building.get()
+                room_no = room_entry.get()
+                total_fees = room_price_entry.get()
+                guardian_first_name = guardian_first_entry.get().capitalize()
+                guardian_middle_name = guardian_middle_entry.get().capitalize()
+                guardian_last_name = guardian_last_entry.get().capitalize()
+                guardian_phone_number = guardian_phone_entry.get()
+                guardian_address = guardian_address_entry.get().capitalize()
+
+                # Insert values into the Students table
+                cursor.execute('''INSERT INTO Students (Date_of_Admission, First_Name, Middle_Name, Last_Name, 
+                                                        Phone_Number, Address, Building, Room_No, Total_Fees, 
+                                                        Guardian_First_Name, Guardian_Middle_Name, Guardian_Last_Name, 
+                                                        Guardian_Phone_Number, Guardian_Address) 
+                                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                            ( date, first_name, middle_name, last_name, phone_number, address,
+                                building_val, room_no, total_fees, guardian_first_name, guardian_middle_name,
+                                guardian_last_name, guardian_phone_number, guardian_address))
+                
+                conn.commit()
+                conn.close()
+
+                r=tk.messagebox.showinfo("", "Student successfully registered!")
+                if r:
+                    menupg()
+
+            except Exception as e:
+                tk.messagebox.showerror("Error", str(e))
 
     def validate_entries():
         # Validate each entry before submitting the form
@@ -44,13 +121,13 @@ def std_regpg():
             (std_last_entry.get(), "Last Name", validate_non_empty),
             (std_phone_entry.get(), "Phone Number", validate_phone_number),
             (std_address_entry.get(), "Address", validate_non_empty),
-            (guardian_first_entry.get(), "Guardian First Name", validate_non_empty),
-            (guardian_last_entry.get(), "Guardian Last Name", validate_non_empty),
-            (guardian_phone_entry.get(), "Guardian Phone Number", validate_phone_number),
-            (guardian_address_entry.get(), "Guardian Address", validate_non_empty),
             (building.get(), "Building", validate_non_empty),
             (room_entry.get(), "Room No", validate_non_empty),
             (room_price_entry.get(), "Total Fees", validate_price),
+            (guardian_first_entry.get(), "Guardian First Name", validate_non_empty),
+            (guardian_last_entry.get(), "Guardian Last Name", validate_non_empty),
+            (guardian_phone_entry.get(), "Guardian Phone Number", validate_phone_number),
+            (guardian_address_entry.get(), "Guardian Address", validate_non_empty)
         ]
 
         for value, entry_name, validation_func in validations:
@@ -79,7 +156,19 @@ def std_regpg():
 
     std_id_entry=Entry(std_registration_frame)
     std_id_entry.grid(row=0,column=1)
+    std_id_entry.insert(0, default_std_id)
+    
+    def on_id_change(event):
+        # Display an error message if user tries to change the std_id
+        tk.messagebox.showerror("Error", "Cannot modify S-ID field.")
+        std_id_entry.delete(0, 'end')
+        std_id_entry.insert(0, default_std_id)
 
+    std_id_entry.bind("<FocusIn>", on_id_change)
+    std_id_entry.bind("<Button-1>", on_id_change)
+
+
+    
     date_label=Label(std_registration_frame,text="Date:")
     date_label.grid(row=1,column=0,pady=3)
 

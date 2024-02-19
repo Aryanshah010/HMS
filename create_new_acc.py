@@ -4,8 +4,72 @@ from PIL import Image, ImageTk
 from tkmacosx import Button
 from tkinter import messagebox
 import homepage
+import sqlite3
 
 def new_acc():
+
+    def create_table():
+        try:
+            conn = sqlite3.connect('hostel.db')
+            c = conn.cursor()
+            c.execute('''CREATE TABLE IF NOT EXISTS adminLogin
+                        (username TEXT PRIMARY KEY, password TEXT)''')
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            print("Error occurred while creating table:", e)
+
+    create_table()
+
+    def insert_user(username, password):
+        try:
+            conn = sqlite3.connect('hostel.db')
+            c = conn.cursor()
+            c.execute("INSERT INTO adminLogin (username, password) VALUES (?, ?)", (username, password))
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            print("Error occurred:", e)
+
+    def validate_login(username, password):
+        conn = sqlite3.connect('hostel.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM adminLogin WHERE username = ? AND password = ?", (username, password))
+        result = c.fetchone()
+        conn.close()
+        return result is not None
+    
+    def validate_sigin():
+        username = username_name.get()
+        password = password_name.get()
+        confirm = comform_password.get()
+        
+        # Check if any field is empty
+        if username==default_username_text or password ==default_password_text or comform_password==default_comform_text:
+            messagebox.showerror("Error", "Please fill all the Entries.")
+        else:
+            if password != confirm:
+                messagebox.showerror("Error", "Password and Confirm Password do not match.")
+            else:
+                # Check if username already exists
+                if validate_existing_username(username):
+                    messagebox.showerror("Error", "Username already exists. Please choose a different username.")
+                    return
+                # Call insert_user() to insert new user data into the database
+                insert_user(username, password)
+                messagebox.showinfo("Success", "Account created successfully!")
+                # Redirect to home page
+                home()
+
+    def validate_existing_username(username):
+        conn = sqlite3.connect('hostel.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM adminLogin WHERE username = ?", (username,))
+        result = c.fetchone()
+        conn.close()
+        return result is not None
+    
+
     
     def home():
         window.destroy()
@@ -17,6 +81,20 @@ def new_acc():
         confirm=comform_password.get()
         if username == default_username_text or password == default_password_text or confirm ==default_comform_text:
             messagebox.showerror("Error", "Please fill all the Entries.")
+
+        else:
+            if password != confirm:
+                messagebox.showerror("Error", "Password and Confirm Password do not match.")
+            else:
+                # Check if username already exists
+                if validate_existing_username(username):
+                    messagebox.showerror("Error", "Username already exists. Please choose a different username.")
+                    return
+                # Call insert_user() to insert new user data into the database
+                insert_user(username, password)
+                messagebox.showinfo("Success", "Account created successfully!")
+                # Redirect to home page
+                home()
     
 
     def on_entry_click(event, entry_widget, default_text):

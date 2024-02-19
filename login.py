@@ -5,28 +5,58 @@ from tkmacosx import Button
 from tkinter import messagebox
 import menu
 import homepage
+import sqlite3
 
 def loginpg():
 
     def home():
+
         window.destroy()
         homepage.main()
 
 
     def validate_sigin():
+        
         username = username_name.get()
         password = password_name.get()
-        if username == default_username_text or password == default_password_text:
-            messagebox.showerror("Error", "Please fill in both username and password.")
+
+        if username==default_username_text or password==default_password_text:
+            messagebox.showerror("","Please fill both entries!")
+        
         else:
-            open_dashboard()
+        
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            
+            # Check if the adminLogin table exists
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='adminLogin'")
+            table_exists = cursor.fetchone()
+            
+            if table_exists:
+                # Execute a query to check if the provided username and password exist in your database
+                cursor.execute("SELECT * FROM adminLogin WHERE username=? AND password=?", (username, password))
+                user = cursor.fetchone()
+                
+                if user:
+                    window.destroy()
+                    menu.dashboard()
+
+                else:
+                    messagebox.showerror("Error", "Invalid username or password")
+            else:
+                # If the adminLogin table doesn't exist, show a message asking to create an account first
+                ok=messagebox.showwarning("Warning", "No user accounts found. Please create an account first.")
+                if ok:
+                    home()
+
+            conn.close()
+    
+
 
     def open_dashboard():
-        # Close the login window
+        
         window.destroy()
-
-        # Call the main function of the dashboard_page module
-        menu.main()
+        menu.dashboard()
 
     def on_entry_click(event, entry_widget, default_text):
         if entry_widget.get() == default_text:
@@ -85,7 +115,6 @@ def loginpg():
     default_username_text = "Username"
     default_password_text = "Password"
 
-    # Create Entry widgets
     username_name = Entry(window, width=15, bg="#D9D9D9", fg="black", font=("verdana", 16), insertbackground="black",
                         insertwidth=2)
     username_name.insert(0,default_username_text)
