@@ -5,13 +5,17 @@ from tkmacosx import Button
 import homepage
 import check_fee
 import myinfo
+import food_menu_std
+from tkinter import messagebox
 
 def std_menupg(): 
 
     def homepg():
-        window.destroy()
-        homepage.main()
-
+        y=messagebox.askyesno("","DO YOU WANT TO LOGOUT?")
+        if y:
+            window.destroy()
+            homepage.main()
+            
     def ck_fee():
         window.destroy()
         check_fee.fees()
@@ -19,6 +23,10 @@ def std_menupg():
     def infopg():
         window.destroy()
         myinfo.myinfopg()
+
+    def fm():
+        window.destroy()
+        food_menu_std.foodM()
 
     window = tk.Tk()
     window.title("MENU")
@@ -69,8 +77,8 @@ def std_menupg():
     std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1,command=infopg)
     std_info_btn.grid(row=2,column=0,pady=10)
 
-    std_info_btn=Button(menu_frame,width=200,height=70,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1)
-    std_info_btn.grid(row=3,column=0,pady=10)
+    food_btn=Button(menu_frame,width=200,height=70,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1,command=fm)
+    food_btn.grid(row=3,column=0,pady=10)
 
 
     logout_btn=Button(window,text="Logout",bg="red",font="verdana 15 bold",borderless=1,command=homepg)

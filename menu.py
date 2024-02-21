@@ -13,6 +13,8 @@ import homepage
 import stdinfo
 import room_info
 import staffInfoPg
+import foodmenu
+from tkinter import messagebox
 
 def dashboard():
     
@@ -56,13 +58,17 @@ def dashboard():
         window.destroy()
         room_info.roominfopg()
 
-    def food():
-        pass
+    def food_menu():
+        window.destroy()
+        foodmenu.food()
 
     def homepg():
-        window.destroy()
-        homepage.main()
-
+        yes=messagebox.askyesno("","DO YOU WANT TO LOGOUT?")
+        if yes:
+            window.destroy()
+            homepage.main(
+                
+            )
     # Function to blur the image and resize it
     def blur_and_resize_image(image_path, blur_radius, size):
         image = Image.open(image_path)
@@ -140,16 +146,15 @@ def dashboard():
     room_info_btn=Button(menu_frame,width=200,height=40,text="Room Info",bg="#00B203",font="verdana 15 bold",borderless=1,command=roominfo)
     room_info_btn.grid(row=10,column=0,pady=5)
 
-    food_menu_btn=Button(menu_frame,width=200,height=40,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1,command=food)
+    food_menu_btn=Button(menu_frame,width=200,height=40,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1,command=food_menu)
     food_menu_btn.grid(row=11,column=0,pady=5)
 
     logout_btn=Button(window,text="Logout",bg="red",font="verdana 15 bold",borderless=1,command=homepg)
     logout_btn.place(x=685,y=555)
-
-   
 
     
     window.mainloop()
 
 if  __name__ == "__main__":
     dashboard()
+   
