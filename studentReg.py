@@ -8,23 +8,7 @@ import menu
 import sqlite3
 
 def std_regpg():
-
-    def fetch_max_std_id():
-        try:
-            conn = sqlite3.connect('hostel.db')
-            cursor = conn.cursor()
-            cursor.execute("SELECT MAX(std_id) FROM Students")
-            max_id = cursor.fetchone()[0]
-            conn.close()
-            return max_id if max_id else 0
-        except Exception as e:
-            tk.messagebox.showerror("Error", str(e))
-            return 0
-
-    # Fetch the maximum std_id and increment it by 1
-    default_std_id = fetch_max_std_id() + 1
-
-
+    
     def menupg():
         window.destroy()
         menu.dashboard()
@@ -116,6 +100,32 @@ def std_regpg():
             except Exception as e:
                 tk.messagebox.showerror("Error", str(e))
 
+    def fetch_max_std_id():
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+
+            # Check if the Students table exists
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Students'")
+            table_exists = cursor.fetchone()
+
+            if table_exists:
+                # Students table exists, fetch the maximum std_id
+                cursor.execute("SELECT MAX(std_id) FROM Students")
+                max_id = cursor.fetchone()[0]  # Fetch the maximum std_id
+                conn.close()
+                return max_id if max_id else 0  # Return the maximum std_id or 0 if no records exist
+            else:
+                # Students table does not exist, return 0
+                conn.close()
+                return 0
+
+        except Exception as e:
+            tk.messagebox.showerror("Error", str(e))
+            return 0
+        
+    default_std_id = fetch_max_std_id() + 1
+
     def validate_entries():
         # Validate each entry before submitting the form
         validations = [
@@ -168,10 +178,9 @@ def std_regpg():
         std_id_entry.delete(0, 'end')
         std_id_entry.insert(0, default_std_id)
 
+
     std_id_entry.bind("<FocusIn>", on_id_change)
-    std_id_entry.bind("<Button-1>", on_id_change)
-
-
+    
     
     date_label=Label(std_registration_frame,text="Date:")
     date_label.grid(row=1,column=0,pady=3)
@@ -359,4 +368,9 @@ if  __name__ == "__main__":
 
 
 
+
+
+
+
+    
 

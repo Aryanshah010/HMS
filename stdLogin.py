@@ -29,7 +29,6 @@ def std_loginpg():
 
             conn.close()
 
-            # If a record is found, login successful
             if student_data:
                 window.destroy()
                 std_menu.std_menupg()
