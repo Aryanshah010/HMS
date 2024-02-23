@@ -55,7 +55,7 @@ def std_regpg():
                                     Building TEXT,
                                     Room_No INTEGER,
                                     Room_type TEXT,
-                                    Total_Fees REAL,
+                                    Total_Fees INTEGER,
                                     Guardian_First_Name TEXT,
                                     Guardian_Middle_Name TEXT,
                                     Guardian_Last_Name TEXT,
@@ -73,7 +73,7 @@ def std_regpg():
                 address = std_address_entry.get().capitalize()
                 building_val = building.get()
                 room_no = room_entry.get()
-                total_fees = room_price_entry.get()
+                total_fees = int(room_price_entry.get())
                 guardian_first_name = guardian_first_entry.get().capitalize()
                 guardian_middle_name = guardian_middle_entry.get().capitalize()
                 guardian_last_name = guardian_last_entry.get().capitalize()

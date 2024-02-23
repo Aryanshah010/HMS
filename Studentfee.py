@@ -17,7 +17,7 @@ def initialize_database():
                         payment_id INTEGER PRIMARY KEY,
                         student_id INTEGER,
                         date_paid DATE,
-                        amount_paid REAL,
+                        amount_paid INTEGER,
                         FOREIGN KEY (student_id) REFERENCES Students (std_id)
                     )''')
 
@@ -78,7 +78,9 @@ def feespg():
             conn.close()
 
             for record in fee_records:
-                date_amt_box.insert("", "end", values=record)
+                # Explicitly convert amount to integer and then to string
+                amount_paid_str = str(int(record[1]))
+                date_amt_box.insert("", "end", values=(record[0], amount_paid_str))
         except Exception as e:
             messagebox.showerror("Error", str(e))
 

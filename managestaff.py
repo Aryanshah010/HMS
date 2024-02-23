@@ -30,14 +30,13 @@ def manage_staffpg():
                     Middle_Name = middlename_entry.get().capitalize()
                     Last_Name = lastname_entry.get().capitalize()
                     Address = address_entry.get().capitalize()
-                    Date_of_join = doj_entry.get()
-                    Post = post_entry.get().capitalize()
+                    Post = post_entry.get()
                     Salary = int(salary_entry.get())
 
                     # Update the record in the database
-                    c.execute('''UPDATE Staff SET First_Name=?, Middle_Name=?, Last_Name=?, Address=?, Date_of_join=?, 
+                    c.execute('''UPDATE Staff SET First_Name=?, Middle_Name=?, Last_Name=?, Address=?, 
                                 Post=?, Salary=?, Phone_Number=? WHERE Phone_Number=?''',
-                                (First_Name, Middle_Name, Last_Name, Address, Date_of_join, Post, Salary,
+                                (First_Name, Middle_Name, Last_Name, Address, Post, Salary,
                                 new_phone_number, current_phone_number))
 
                     conn.commit()
@@ -51,6 +50,7 @@ def manage_staffpg():
                 messagebox.showerror("Error", str(e))
 
     def onclick_delete():
+
         phone_number = phone_entry.get()
         
         # Check if the phone number field is empty
@@ -62,7 +62,7 @@ def manage_staffpg():
         
         # Check if staff details are fetched successfully
         if not staff_details:
-            messagebox.showerror("Error", "Staff not found with the provided phone number.")
+            messagebox.showerror("Error", "Staff not found with the provided phone number!")
             return
         
         result = messagebox.askyesno("Delete Confirmation", "Are you sure you want to delete this staff?")
@@ -84,15 +84,17 @@ def manage_staffpg():
                 messagebox.showerror("Error", str(e))
 
     def search_staff():
+
         phone_number = phone_entry.get()
+
         if phone_number:
             staff_details = get_staff_details_from_db(phone_number)
             if staff_details:
                 fill_entry_fields(staff_details)
             else:
-                messagebox.showerror("Error", "Staff not found with the provided phone number.")
+                messagebox.showerror("Error", "Staff not found with the provided phone number!")
         else:
-            messagebox.showerror("Error", "Please enter a phone number to search.")
+            messagebox.showerror("Error", "Please enter a phone number to search!")
 
     def get_staff_details_from_db(phone_number):
         try:
@@ -114,15 +116,13 @@ def manage_staffpg():
         middlename_entry.delete(0, END)
         lastname_entry.delete(0, END)
         address_entry.delete(0, END)
-        doj_entry.delete(0,END)
         post_entry.set('')
         salary_entry.delete(0, END)
 
         firstname_entry.insert(0, details[0])  
         middlename_entry.insert(0, details[1])  
         lastname_entry.insert(0, details[2])    
-        address_entry.insert(0, details[4])  
-        doj_entry.insert(0,details[5])   
+        address_entry.insert(0, details[4])    
         post_entry.set(details[6])              
         salary_entry.insert(0, details[7])       
 
@@ -137,7 +137,7 @@ def manage_staffpg():
     win.resizable(0,0)
 
     window_width = 475
-    window_height = 410
+    window_height = 370
 
     # get the screen dimension
     screen_width = win.winfo_screenwidth()
@@ -217,32 +217,26 @@ def manage_staffpg():
     address_entry= Entry(win,width=22)
     address_entry.grid(row=4,column=1)
 
-    doj=Label(win,text="Date of Join:")
-    doj.grid(row=6,column=0,sticky="w",padx=10,pady=10)
-
-    doj_entry=Entry(win,width=22)
-    doj_entry.grid(row=6,column=1)
-
     post= Label(win, text="Post:")
-    post.grid(row=7,column=0,sticky="w",padx=10,pady=10)
+    post.grid(row=5,column=0,sticky="w",padx=10,pady=10)
                 
     post_entry=  ttk.Combobox(win,values=["Cleaner","Cook","warden","security guard"] )
-    post_entry.grid(row=7,column=1)
+    post_entry.grid(row=5,column=1)
 
     salary= Label(win, text="Salary:")
-    salary.grid(row=8,column=0,sticky="w",padx=10,pady=10)
+    salary.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
     salary_entry=Entry(win,width=22)
-    salary_entry.grid(row=8,column=1)
+    salary_entry.grid(row=6,column=1)
 
     update_btn = Button(win, text="Update", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick_update)
-    update_btn.grid(row=9, column=0,  sticky="w",padx=10,pady=10)
+    update_btn.grid(row=7, column=0,  sticky="w",padx=10,pady=10)
 
     delete_btn = Button(win, text="Delete", bg="red",font="verdana 14 bold",borderless=1,command=onclick_delete)
-    delete_btn.grid(row=9, column=1, sticky="w",padx=10,pady=10)
+    delete_btn.grid(row=7, column=1, sticky="w",padx=10,pady=10)
 
     close_btn = Button(win, text="Back", bg="pink",fg="black",font="verdana 13 bold",borderless=1,command=menupg)
-    close_btn.grid(row=9, column=3,  sticky="e",padx=10)
+    close_btn.grid(row=7, column=3,  sticky="e",padx=10)
 
     win.mainloop()
 
