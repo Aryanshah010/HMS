@@ -6,6 +6,88 @@ from PIL  import Image , ImageTk
 from tkmacosx import Button
 import datetime
 import menu
+import sqlite3
+
+def initialize_database():
+    try:
+        conn = sqlite3.connect('hostel.db')
+        cursor = conn.cursor()
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Staff_Payments (
+                        staff_payment_id INTEGER PRIMARY KEY,
+                        Phone_Number INTEGER,
+                        salary_date TEXT,
+                        payment_amount INTEGER,
+                        FOREIGN KEY (Phone_Number) REFERENCES Staff (Phone_Number)
+                    )''')
+
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+def salarypg():
+    initialize_database()
+
+    def on_scroll(*args):
+        date_amt_box.yview(*args)
+
+
+    def search_staff():
+        phoneNum=phone_entry.get()
+        if not phoneNum:
+            messagebox.showerror("Error", "Please enter a valid phone number.")
+            return
+        
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Staff WHERE Phone_Number=?", (phoneNum,))
+            staff_data = cursor.fetchone()
+            conn.close()
+
+            if staff_data:
+                Firstnameentry.delete(0, 'end')
+                Firstnameentry.insert(0, staff_data[0])
+                Middlenameentry.delete(0, 'end')
+                Middlenameentry.insert(0, staff_data[1])
+                Lastnameentry.delete(0, 'end')
+                Lastnameentry.insert(0, staff_data[2])
+                post_entry.delete(0,'end')
+                post_entry.insert(0,staff_data[6])
+
+                
+                # Clear existing records in the treeview
+                clear_treeview()
+
+                # Load and display fee records for this student
+                load_fee_records(phoneNum)
+            else:
+                messagebox.showerror("Error", "Staff not found.")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+    
+    def clear_treeview():
+        date_amt_box.delete(*date_amt_box.get_children())
+
+
+    def load_fee_records(phoneNum):
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT salary_date, payment_amount FROM Staff_Payments  WHERE Phone_Number=?", (phoneNum,))
+            fee_records = cursor.fetchall()
+            conn.close()
+
+            for record in fee_records:
+                # Explicitly convert amount to integer and then to string
+                amount_paid = str(int(record[1]))
+                date_amt_box.insert("", "end", values=(record[0], amount_paid))
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+
 
 def salarypg():
 
@@ -24,11 +106,44 @@ def salarypg():
 
 
     def onclick():
+
+        try:
+            phoneNum=phone_entry.get()
+            salary_date=Monthentry.get()
+            amount=AmountPaidentry.get()
+
+            if not phoneNum or not salary_date or not amount:
+                    messagebox.showerror("Error", "Please fill in all fields.")
+                    return
+            
+            try:
+                amount_paid = int(amount)
+            except ValueError:
+                    messagebox.showerror("Error", "Amount must be a valid integer.")
+                    return
+            
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO Staff_Payments(phone_number, salary_date,payment_amount ) VALUES (?, ?, ?)", (phoneNum, salary_date, amount_paid))
+            conn.commit()
+            conn.close()
+            
+            date_amt_box.insert("", "end", values=(salary_date, amount_paid))
+
+            y = messagebox.askyesno("", "Do you want to save the fee of this staff?")
+            if y:
+                    r = messagebox.showinfo("", "Staff fee saved successfully!")
+                    if r:
+                        menupg()
+        except Exception as e:
+                messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
         save=tk.messagebox.askyesno("","DO YOU WANT TO SAVE THE PAYMENT?")
         if save:
             tk.messagebox.showinfo("","Staff salary saved successfully!")
         else:
             tk.messagebox.showinfo("","Salary paid canceled!")
+
 
 
     win=tk.Tk()
@@ -102,7 +217,11 @@ def salarypg():
     icon_image = icon_image.resize((16, 16))  
     search_icon = ImageTk.PhotoImage(icon_image)
 
+
+    search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left",command=search_staff)
+
     search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left")
+
     search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
     save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick)
