@@ -87,6 +87,14 @@ def salarypg():
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
+
+
+def salarypg():
+
+    def on_scroll(*args):
+        date_amt_box.yview(*args)
+    
+    
     def menupg():
         win.destroy()
         menu.dashboard()
@@ -98,6 +106,7 @@ def salarypg():
 
 
     def onclick():
+
         try:
             phoneNum=phone_entry.get()
             salary_date=Monthentry.get()
@@ -128,6 +137,13 @@ def salarypg():
                         menupg()
         except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
+        save=tk.messagebox.askyesno("","DO YOU WANT TO SAVE THE PAYMENT?")
+        if save:
+            tk.messagebox.showinfo("","Staff salary saved successfully!")
+        else:
+            tk.messagebox.showinfo("","Salary paid canceled!")
+
 
 
     win=tk.Tk()
@@ -201,7 +217,11 @@ def salarypg():
     icon_image = icon_image.resize((16, 16))  
     search_icon = ImageTk.PhotoImage(icon_image)
 
+
     search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left",command=search_staff)
+
+    search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left")
+
     search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
     save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick)
