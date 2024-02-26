@@ -31,7 +31,7 @@ def std_mainpg():
 
             if student_data:
                 window.destroy()
-                std_menupg()
+                std_menupg(student_data[0])
             else:
                 messagebox.showerror("Login Error", "Invalid phone number or student ID.")
 
@@ -123,7 +123,7 @@ def std_mainpg():
 
 
 
-def std_menupg(): 
+def std_menupg(student_id): 
 
     def homepg():
         y=messagebox.askyesno("","DO YOU WANT TO LOGOUT?")
@@ -131,17 +131,17 @@ def std_menupg():
             window.destroy()
             homepage.main()
             
-    def ck_fee():
+    def ck_fee(student_id):
         window.destroy()
-        fees()
+        fees(student_id)
 
-    def infopg():
+    def infopg(student_id):
         window.destroy()
-        myinfopg()
+        myinfopg(student_id)
 
-    def fm():
+    def fm(student_id):
         window.destroy()
-        foodM()
+        foodM(student_id)
 
     window = tk.Tk()
     window.title("MENU")
@@ -186,13 +186,13 @@ def std_menupg():
     menu_label=tk.Label(menu_frame,text="DASHBOARD",fg="#D76500",bg="#00D4FF",font="verdana 20 bold underline")
     menu_label.grid(row=0,column=0,sticky="w",padx=14,pady=5)
 
-    fees_btn=Button(menu_frame,width=200,height=70,text="Check Fees",bg="#00B203",font="verdana 15 bold",borderless=1,command=ck_fee)
+    fees_btn=Button(menu_frame,width=200,height=70,text="Check Fees",bg="#00B203",font="verdana 15 bold",borderless=1,command=lambda: ck_fee(student_id))
     fees_btn.grid(row=1,column=0,pady=10)
 
-    std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1,command=infopg)
+    std_info_btn=Button(menu_frame,width=200,height=70,text="My Info",bg="#00B203",font="verdana 15 bold",borderless=1,command=lambda: infopg(student_id))
     std_info_btn.grid(row=2,column=0,pady=10)
 
-    food_btn=Button(menu_frame,width=200,height=70,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1,command=fm)
+    food_btn=Button(menu_frame,width=200,height=70,text="Food Menu",bg="#00B203",font="verdana 15 bold",borderless=1,command=lambda: fm(student_id))
     food_btn.grid(row=3,column=0,pady=10)
 
 
@@ -204,14 +204,26 @@ def std_menupg():
 
 
 
-def fees():
+def fees(student_id):
+
+    def fetch_fee_records(student_id):
+        try:
+            conn = sqlite3.connect('hostel.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT date_paid, amount_paid FROM Payments WHERE student_id=?", (student_id,))
+            fee_records = cursor.fetchall()
+            conn.close()
+            return fee_records
+        except Exception as e:
+            messagebox.showerror("Error", f"Error fetching fee records: {str(e)}")
+            return []
      
     def on_scroll(*args):
         date_amt_box.yview(*args)
 
-    def stdmenupg():
+    def stdmenupg(student_id):
         window.destroy()
-        std_menupg()
+        std_menupg(student_id)
 
     window = tk.Tk()
     window.title("FEE RECORD")
@@ -254,18 +266,30 @@ def fees():
     
     date_amt_box.pack(padx=2)
 
-    back_btn = Button(window, text="Back", width=100, height=30, bg="#F33400", fg="black", font=("verdana 13 bold"),borderless=1,command=stdmenupg)
+    fee_records = fetch_fee_records(student_id)
+    for record in fee_records:
+        date_amt_box.insert("", "end", values=record)
+
+    back_btn = Button(window, text="Back", width=100, height=30, bg="#F33400", fg="black", font=("verdana 13 bold"),borderless=1,command=lambda: stdmenupg(student_id))
     back_btn.place(x=385,y=220)
- 
 
     window.mainloop()
 
 
-def myinfopg():
+def myinfopg(student_id):
 
-    def stdmenupage():
+    def stdmenupage(student_id):
         win.destroy()
-        std_menupg()
+        std_menupg(student_id)
+
+    conn = sqlite3.connect('hostel.db')
+    cursor = conn.cursor()
+
+    # Retrieve student's information based on the provided ID
+    cursor.execute("SELECT * FROM Students WHERE std_id=?", (student_id,))
+    student_data = cursor.fetchone()
+
+    conn.close()
 
     win=tk.Tk()
     win.title("MY INFO")
@@ -292,104 +316,119 @@ def myinfopg():
 
     std_id_entry=Entry(win)
     std_id_entry.grid(row=0,column=1)
+    std_id_entry.insert(0, student_data[0])
 
     date_label=Label(win,text="Date of Admission:")
     date_label.grid(row=1,column=0,sticky="w",padx=10,pady=10)
 
     date_value = Entry(win)
     date_value.grid(row=1, column=1)
+    date_value.insert(0, student_data[1])
 
     std_first=Label(win,text="First Name:")
     std_first.grid(row=2,column=0,sticky="w",padx=10,pady=10)
 
-
     std_first_entry=Entry(win)
     std_first_entry.grid(row=2,column=1)
+    std_first_entry.insert(0,student_data[2])
+
 
     std_middle=Label(win,text="Middle Name:")
     std_middle.grid(row=3,column=0,sticky="w",padx=10,pady=10)
 
     std_middle_entry=Entry(win)
     std_middle_entry.grid(row=3,column=1)
+    std_middle_entry.insert(0, student_data[3])
 
     std_last=Label(win,text="Last Name:")
     std_last.grid(row=4,column=0,sticky="w",padx=10,pady=10)
 
     std_last_entry=Entry(win)
     std_last_entry.grid(row=4,column=1)
+    std_last_entry.insert(0, student_data[4])
 
     std_phone=Label(win,text="Phone Number:")
     std_phone.grid(row=5,column=0,sticky="w",padx=10,pady=10)
 
     std_phone_entry=Entry(win)
     std_phone_entry.grid(row=5,column=1)
+    std_phone_entry.insert(0, student_data[5])
 
     std_address=Label(win,text="Address:")
     std_address.grid(row=6,column=0,sticky="w",padx=10,pady=10)
 
     std_address_entry=Entry(win)
     std_address_entry.grid(row=6,column=1)
+    std_address_entry.insert(0, student_data[6])
 
     building_label=Label(win,text="Building:")
     building_label.grid(row=7,column=0,sticky="w",padx=10,pady=10)
 
     building_entry=Entry(win)
     building_entry.grid(row=7,column=1)
+    building_entry.insert(0,student_data[7])
 
     room_num=Label(win,text="Room Number:")
     room_num.grid(row=8,column=0,sticky="w",padx=10,pady=10)
 
     room_num_entry=Entry(win)
     room_num_entry.grid(row=8,column=1)
+    room_num_entry.insert(0,student_data[8])
 
     room_price=Label(win,text="Total Fees:")
     room_price.grid(row=9,column=0,sticky="w",padx=10,pady=10)
 
     room_price_entry=Entry(win)
     room_price_entry.grid(row=9,column=1)
+    room_price_entry.insert(0,student_data[10])
 
     guardian_first=Label(win,text="G First Name:")
     guardian_first.grid(row=10,column=0,sticky="w",padx=10,pady=10)
 
     guardian_first_entry=Entry(win)
     guardian_first_entry.grid(row=10,column=1)
+    guardian_first_entry.insert(0,student_data[11])
 
     guardian_middle=Label(win,text="G Middle Name:")
     guardian_middle.grid(row=11,column=0,sticky="w",padx=10,pady=10)
 
     guardian_middle_entry=Entry(win)
     guardian_middle_entry.grid(row=11,column=1)
+    guardian_middle_entry.insert(0,student_data[12])
 
     guardian_last=Label(win,text="G Last Name:")
     guardian_last.grid(row=12,column=0,sticky="w",padx=10,pady=10)
 
     guardian_last_entry=Entry(win)
     guardian_last_entry.grid(row=12,column=1)
+    guardian_last_entry.insert(0,student_data[13])
 
     guardian_phone=Label(win,text="G Phone Number:")
     guardian_phone.grid(row=13,column=0,sticky="w",padx=10,pady=10)
 
     guardian_phone_entry=Entry(win)
     guardian_phone_entry.grid(row=13,column=1)
+    guardian_phone_entry.insert(0,student_data[14])
 
     guardian_address=Label(win,text="G Address:")
     guardian_address.grid(row=14,column=0,sticky="w",padx=10,pady=10)
 
     guardian_address_entry=Entry(win)
     guardian_address_entry.grid(row=14,column=1)
+    guardian_address_entry.insert(0,student_data[15])
 
-    back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 15 bold",borderless=1,command=stdmenupage)
+    back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 15 bold",borderless=1,command=lambda: stdmenupage(student_id))
     back_btn.place(x=10,y=650)
     
 
     win.mainloop()
 
 
-def foodM():
+def foodM(student_id):
 
-    def stdMenu():
+    def stdMenu(student_id):
         window.destroy()
-        std_menupg()
+        std_menupg(student_id)
 
     window = tk.Tk()
     window.title("FOOD MENU")
@@ -414,7 +453,7 @@ def foodM():
     image = Label(image=FoodMenu, border=0)
     image.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
 
-    back_btn=Button(window,text="Back",bg="#DA00D6",font="verdana 15 bold",command=stdMenu)
+    back_btn=Button(window,text="Back",bg="#DA00D6",font="verdana 15 bold",command=lambda: stdMenu(student_id))
     back_btn.place(x=10,y=615)
 
 
