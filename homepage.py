@@ -5,7 +5,7 @@ from tkmacosx import Button
 from PIL import Image, ImageFilter, ImageTk
 import login
 import create_new_acc
-import stdLogin
+import forStudent
 
 def main(): 
 
@@ -19,7 +19,7 @@ def main():
 
     def std_login():
         window.destroy()
-        stdLogin.std_loginpg()
+        forStudent.std_mainpg()
         
     def blur_and_resize_image(image_path, blur_radius, size):
         image = Image.open(image_path)
