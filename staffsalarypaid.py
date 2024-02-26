@@ -87,14 +87,6 @@ def salarypg():
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
-
-
-def salarypg():
-
-    def on_scroll(*args):
-        date_amt_box.yview(*args)
-    
-    
     def menupg():
         win.destroy()
         menu.dashboard()
@@ -105,16 +97,20 @@ def salarypg():
         Monthentry.insert(0, current_date)
 
 
-    def onclick():
+    def save():
 
         try:
             phoneNum=phone_entry.get()
             salary_date=Monthentry.get()
-            amount=AmountPaidentry.get()
+            amount=int(AmountPaidentry.get())
 
             if not phoneNum or not salary_date or not amount:
-                    messagebox.showerror("Error", "Please fill in all fields.")
+                    messagebox.showerror("", "Please fill in all fields.")
                     return
+            if amount<=0:
+                 messagebox.showerror("","Please enter valid amount")
+                 return
+            
             
             try:
                 amount_paid = int(amount)
@@ -138,17 +134,10 @@ def salarypg():
         except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-        save=tk.messagebox.askyesno("","DO YOU WANT TO SAVE THE PAYMENT?")
-        if save:
-            tk.messagebox.showinfo("","Staff salary saved successfully!")
-        else:
-            tk.messagebox.showinfo("","Salary paid canceled!")
-
-
 
     win=tk.Tk()
     win.resizable(0,0)
-    win.title("STAFF Salary")
+    win.title("STAFF SALARY")
 
     window_width = 483
     window_height = 630
@@ -220,11 +209,9 @@ def salarypg():
 
     search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left",command=search_staff)
 
-    search_button = Button(win, text="Search", bg="#00C8D8",fg="white",font="verdana 14",image=search_icon, borderless=1,compound="left")
-
     search_button.grid(row=0,column=3,pady=10,padx=10, sticky='w')
 
-    save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=onclick)
+    save_btn = Button(win, text="Save", bg="#FF7F24",font="verdana 14 bold",borderless=1,command=save)
     save_btn.place(x=20,y=350)
 
     back_btn=Button(win,text="Back",bg="#DA00D6",font="verdana 14 bold",borderless=1,command=menupg)

@@ -29,7 +29,7 @@ def std_menupg():
         food_menu_std.foodM()
 
     window = tk.Tk()
-    window.title("MENU")
+    window.title("STUDENT MENU")
     window.resizable(0,0)
     window_width = 730
     window_height = 310

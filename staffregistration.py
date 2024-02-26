@@ -14,7 +14,7 @@ def reg_staffpg():
         menu.dashboard()
 
     win=tk.Tk()
-    win.title("Staff Registration")
+    win.title("STAFF REGISTRATION")
     win.resizable(0,0)
 
     window_width = 400
