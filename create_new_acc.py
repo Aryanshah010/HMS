@@ -108,7 +108,7 @@ def new_acc():
             entry_widget.config(fg="black")
 
     window = tk.Tk()
-    window.title("LOGIN")
+    window.title("REGISTER")
     window.resizable(0, 0)
     window.configure(bg="purple")
     window_width = 600
