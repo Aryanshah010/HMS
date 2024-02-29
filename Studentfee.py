@@ -68,6 +68,8 @@ def feespg():
 
     def clear_treeview():
         date_amt_box.delete(*date_amt_box.get_children())
+    
+    
 
     def load_fee_records(student_id):
         try:
@@ -83,7 +85,6 @@ def feespg():
                 date_amt_box.insert("", "end", values=(record[0], amount_paid_str))
         except Exception as e:
             messagebox.showerror("Error", str(e))
-
     def save_fee_record():
         try:
             # Get student ID and fee details
@@ -103,24 +104,41 @@ def feespg():
                 messagebox.showerror("Error", "Amount must be a valid integer.")
                 return
 
-            # Save the fee record in the database
-            conn = sqlite3.connect('hostel.db')
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO Payments (student_id, date_paid, amount_paid) VALUES (?, ?, ?)", (student_id, date_paid, amount_paid))
-            conn.commit()
-            conn.close()
+            # Validate total fees
+            if not is_valid_total_fees(amount_paid_str):
+                messagebox.showerror("Error", "Invalid total fees. Please enter a non-negative number.")
+                return
 
-            # Update the treeview to reflect the new fee record
-            date_amt_box.insert("", "end", values=(date_paid, amount_paid))
+            # Show a confirmation dialog
+            response = messagebox.askyesno("", "Do you want to save the fee of this student?")
 
-            # Show a success message
-            y = messagebox.askyesno("", "Do you want to save the fee of this student?")
-            if y:
-                r = messagebox.showinfo("", "Student fee saved successfully!")
-                if r:
-                    menupg()
+            if response:
+                # Save the fee record in the database
+                conn = sqlite3.connect('hostel.db')
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO Payments (student_id, date_paid, amount_paid) VALUES (?, ?, ?)", (student_id, date_paid, amount_paid))
+                conn.commit()
+                conn.close()
+
+                # Update the treeview to reflect the new fee record
+                clear_treeview()
+                load_fee_records(student_id)
+
+                # Show a success message
+                messagebox.showinfo("", "Student fee saved successfully!")
+                menupg()
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
+            
+    def is_valid_total_fees(total_fees):
+        try:
+            total_fees = float(total_fees)
+            if total_fees < 0:
+                return False
+            else:
+                return True
+        except ValueError:
+            return False
 
     def on_scroll(*args):
         date_amt_box.yview(*args)
