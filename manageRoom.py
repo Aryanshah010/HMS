@@ -13,17 +13,31 @@ def manage_roompg():
         menu.dashboard()
 
     def validate_entries():
-       
+        # Check if any of the fields are empty
         if not room_num_entry.get() or not building.get() or not total_fees_entry.get():
             messagebox.showerror("Validation Error", "Please fill in all the fields.")
             return False
 
-       
-        if int(total_fees_entry.get()) < 0:
-            messagebox.showerror("", "Please enter valid fee amount!")
+        # Check if room number is a positive integer
+        try:
+            room_number = int(room_num_entry.get())
+            if room_number <= 0:
+                raise ValueError
+        except ValueError:
+            messagebox.showerror("", "Room number must be a positive integer.")
+            return False
+
+        # Check if total fees is a positive integer
+        try:
+            total_fees = int(total_fees_entry.get())
+            if total_fees < 0:
+                raise ValueError
+        except ValueError:
+            messagebox.showerror("", "Please enter a valid fee amount.")
             return False
 
         return True
+
     
     def create_rooms_table():
 
@@ -94,20 +108,28 @@ def manage_roompg():
 
     def update():
         room_number_str = update_room_num_entry.get()
-        if room_number_str:
-            room_number = int(room_number_str)
-            if is_room_registered(room_number):
-                room_status_val = val.get()
-                update_room_status(room_number, room_status_val)
-                z=messagebox.askyesno("", "Do you want to update room status of this room?")
-                if z:
-                    v=messagebox.showinfo("","Room status updated successfully!")
-                    if v:
-                        menupg()
-            else:
-                messagebox.showerror("Error", f"Room number {room_number} does not exist.")
-        else:
+        if not room_number_str:
             messagebox.showerror("Error", "Please enter a room number.")
+            return
+
+        try:
+            room_number = int(room_number_str)
+            if room_number <= 0:
+                raise ValueError
+        except ValueError:
+            messagebox.showerror("Error", "Room number must be a positive integer.")
+            return
+
+        if is_room_registered(room_number):
+            room_status_val = val.get()
+            update_room_status(room_number, room_status_val)
+            z = messagebox.askyesno("", "Do you want to update room status of this room?")
+            if z:
+                v = messagebox.showinfo("", "Room status updated successfully!")
+                if v:
+                    menupg()
+        else:
+            messagebox.showerror("Error", f"Room number {room_number} does not exist.")
     
     def is_room_registered(room_number):
         conn = sqlite3.connect('hostel.db')
@@ -118,20 +140,29 @@ def manage_roompg():
         return count > 0
     
     def delete():
-        room_number_str = update_room_num_entry.get()
-        if room_number_str:
-            room_number = int(room_number_str)
+            room_number_str = update_room_num_entry.get()
+            if not room_number_str:
+                messagebox.showerror("Error", "Please enter a room number.")
+                return
+
+            try:
+                room_number = int(room_number_str)
+                if room_number <= 0:
+                    raise ValueError
+            except ValueError:
+                messagebox.showerror("Error", "Room number must be a positive integer.")
+                return
+
             if is_room_registered(room_number):
                 result = messagebox.askyesno("", f"Are you sure you want to delete room {room_number}?")
                 if result:
                     delete_room(room_number)
-                    l=messagebox.showinfo("",f"Room {room_number} deleted successfully.")
+                    l = messagebox.showinfo("", f"Room {room_number} deleted successfully.")
                     if l:
                         menupg()
             else:
                 messagebox.showerror("Error", f"Room number {room_number} does not exist.")
-        else:
-            messagebox.showerror("Error", "Please enter a room number.")
+            
 
 
     window=tk.Tk()
