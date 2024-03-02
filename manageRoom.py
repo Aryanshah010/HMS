@@ -75,7 +75,7 @@ def manage_roompg():
         conn.close()
         
     def create():
-
+        
         if validate_entries():
             room_number = int(room_num_entry.get())
             building_val = building.get()
@@ -83,13 +83,14 @@ def manage_roompg():
             room_status_val = val.get()
             total_fees_val = int(total_fees_entry.get())
 
-            insert_room_details(room_number, building_val, room_type_val, room_status_val, total_fees_val)
-
-            o=messagebox.askyesno("", "Do you want to create this room?")
-            if o:
-               k=messagebox.showinfo("","Room created successfully!")
-               if k:
-                   menupg()
+            confirm = messagebox.askyesno("", "Do you want to create this room?")
+            if confirm:
+                insert_room_details(room_number, building_val, room_type_val, room_status_val, total_fees_val)
+                messagebox.showinfo("", "Room created successfully!")
+                menupg()
+            else:
+                messagebox.showinfo("", "No room was created.")
+                menupg
 
     def update_room_status(room_number, room_status):
 
@@ -259,6 +260,7 @@ def manage_roompg():
     room_num_entry.insert(0, last_room_number)
 
     window.mainloop()
+
 
 
 if  __name__ == "__main__":
