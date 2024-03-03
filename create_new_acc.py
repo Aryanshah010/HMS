@@ -69,33 +69,9 @@ def new_acc():
         conn.close()
         return result is not None
     
-
-    
     def home():
         window.destroy()
-        homepage.main()
-
-    def validate_sigin():
-        username = username_name.get()
-        password = password_name.get()
-        confirm=comform_password.get()
-        if username == default_username_text or password == default_password_text or confirm ==default_comform_text:
-            messagebox.showerror("Error", "Please fill all the Entries.")
-
-        else:
-            if password != confirm:
-                messagebox.showerror("Error", "Password and Confirm Password do not match.")
-            else:
-                # Check if username already exists
-                if validate_existing_username(username):
-                    messagebox.showerror("Error", "Username already exists. Please choose a different username.")
-                    return
-                # Call insert_user() to insert new user data into the database
-                insert_user(username, password)
-                messagebox.showinfo("Success", "Account created successfully!")
-                # Redirect to home page
-                home()
-    
+        homepage.main()  
 
     def on_entry_click(event, entry_widget, default_text):
         if entry_widget.get() == default_text:
